@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Options;
 using MongoDb.UserInterface.AutoMapper.EntityDtoMappers;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
+using MongoDb.UserInterface.Services.Abstractions.ProductServices;
 using MongoDb.UserInterface.Services.Concretions.CategoryServices;
+using MongoDb.UserInterface.Services.Concretions.ProductServices;
 using MongoDb.UserInterface.Settings;
 using System.Reflection;
 
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
 builder.Services.AddScoped<IDatabaseSettings>(sp =>

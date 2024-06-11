@@ -1,0 +1,33 @@
+﻿@model CreateProductDto
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+
+<form method="post">
+    <div class="container">
+        <br />
+        <div class="alert alert-primary">
+            <h4>Create Product</h4>
+        </div>
+        <br />
+        <label> Name</label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <br />
+        <label>Description</label>
+        <input type="text" asp-for="Description" class="form-control" />
+        <br />
+        <label>Price</label>
+        <input type="text" asp-for="Price" class="form-control" />
+        <br />
+        <label>Stock</label>
+        <input type="text" asp-for="Stock" class="form-control" />
+        <br />
+        <label>Image Url</label>
+        <input type="text" asp-for="ImageUrl" class="form-control" />
+        <br />
+        <button class="btn btn-primary">Create new Product</button>
+    </div>
+</form>
