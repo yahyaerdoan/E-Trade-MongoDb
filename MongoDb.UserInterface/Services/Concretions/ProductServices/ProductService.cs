@@ -30,7 +30,7 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
 
         public async Task DeleteProductAsync(string id)
         {
-            await _productCollection.DeleteOneAsync(x=> x.ProductId == id);
+            await _productCollection.DeleteOneAsync(x=> x.Id == id);
         }
 
         public async Task<List<ResultProductDto>> GetAllAsync()
@@ -41,14 +41,14 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
 
         public async Task<GetByIdProductDto> GetByIdProductAsync(string id)
         {
-            var values = await _productCollection.Find<Product>(x => x.ProductId == id).FirstOrDefaultAsync();
+            var values = await _productCollection.Find<Product>(x => x.Id == id).FirstOrDefaultAsync();
             return _mapper.Map<GetByIdProductDto>(values);
         }
 
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)
         {
            var values  = _mapper.Map<Product>(updateProductDto);
-            await _productCollection.FindOneAndReplaceAsync(x => x.ProductId == updateProductDto.ProductId, values);
+            await _productCollection.FindOneAndReplaceAsync(x => x.Id == updateProductDto.ProductId, values);
         }
     }
 }
