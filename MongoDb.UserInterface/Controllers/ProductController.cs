@@ -32,7 +32,7 @@ namespace MongoDb.UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> DeleteCategory(string id)
+        public async Task<IActionResult> DeleteProduct(string id)
         {
             await _productService.DeleteProductAsync(id);
             return RedirectToAction("Index");

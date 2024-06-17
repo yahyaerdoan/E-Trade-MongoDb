@@ -35,21 +35,7 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
 
         public async Task<List<ResultProductDto>> GetAllAsync()
         {
-            var values = await _productCollection.Find(x=> true).ToListAsync();
-            //var result = new List<ResultProductDto>();
-            //foreach (var product in values)
-            //{
-            //    var products = new ResultProductDto
-            //    {
-            //        CategoryId = product.CategoryId,
-            //        Description = product.Description,
-            //        ImageUrl = product.ImageUrl,
-            //        Name = product.Name,
-            //        Price = product.Price,
-            //        ProductId = product.Id,
-            //        StockQuantity = product.StockQuantity,
-            //    };
-            //}
+            var values = await _productCollection.Find(x=> true).ToListAsync();     
             return _mapper.Map<List<ResultProductDto>>(values);
         }
 
@@ -62,7 +48,7 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)
         {
            var values  = _mapper.Map<Product>(updateProductDto);
-            await _productCollection.FindOneAndReplaceAsync(x => x.Id == updateProductDto.ProductId, values);
+            await _productCollection.FindOneAndReplaceAsync(x => x.Id == updateProductDto.Id, values);
         }
     }
 }

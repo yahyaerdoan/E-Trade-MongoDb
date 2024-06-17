@@ -32,7 +32,14 @@
                 <td><span>$</span>@item.Price</td>
                 <td>@item.StockQuantity</td>
                 <td>@item.CategoryId</td>
-                <td>@item.ImageUrl</td>
+                <td>@if (item.ImageIds.Any())
+                    {
+                        foreach (var image in item.ImageIds)
+                        {
+                            <p>@image</p>
+                        }
+                    }
+                 </td>
                 <td> <a href="/Product/DeleteProduct/@item.Id" class="btn  btn-danger">Delete</a></td>
                 <td> <a href="/Product/UpdateProduct/@item.Id" class="btn  btn-success">Update</a></td>
             </tr>

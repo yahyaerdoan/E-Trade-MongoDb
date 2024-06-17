@@ -14,7 +14,7 @@
         </div>
         <br />
         <label> Name</label>
-        <input type="hidden" asp-for="ProductId" class="form-control" />
+        <input type="hidden" asp-for="Id" class="form-control" />
 
         <input type="text" asp-for="Name" class="form-control" />
         <br />
@@ -29,6 +29,16 @@
         <br />
         <label>Category Id</label>
         <input type="text" asp-for="CategoryId" class="form-control" />
+        <br />
+        <label>Image Ids</label>
+        @if (Model.ImageIds.Any())
+        {
+            foreach (var image in Model.ImageIds)
+            {
+                <input type="text" asp-for="ImageIds" value="@image" class="form-control" />
+                <br />
+            }
+        }
         <br />
         <button class="btn btn-primary">Update new Product</button>
     </div>
