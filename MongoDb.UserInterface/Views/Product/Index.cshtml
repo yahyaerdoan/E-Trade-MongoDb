@@ -18,21 +18,23 @@
             <th>Description</th>
             <th>Price</th>
             <th>Stock</th>
-            <th>Image Url</th>
+            <th>Category Id</th>
+            <th>Image Id</th>
             <th>Delete</th>
             <th>Update</th>
         </tr>
-        @foreach (var item in Model)
+        @foreach (var item in Model)    
         {
             <tr>
-                <td>@item.ProductId</td>
+                <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>@item.Description</td>
                 <td><span>$</span>@item.Price</td>
-                <td>@item.Stock</td>
+                <td>@item.StockQuantity</td>
+                <td>@item.CategoryId</td>
                 <td>@item.ImageUrl</td>
-                <td> <a href="/Product/DeleteProduct/@item.ProductId" class="btn  btn-danger">Delete</a></td>
-                <td> <a href="/Product/UpdateProduct/@item.ProductId" class="btn  btn-success">Update</a></td>
+                <td> <a href="/Product/DeleteProduct/@item.Id" class="btn  btn-danger">Delete</a></td>
+                <td> <a href="/Product/UpdateProduct/@item.Id" class="btn  btn-success">Update</a></td>
             </tr>
         }
     </table>

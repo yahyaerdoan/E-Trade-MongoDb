@@ -36,6 +36,20 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
         public async Task<List<ResultProductDto>> GetAllAsync()
         {
             var values = await _productCollection.Find(x=> true).ToListAsync();
+            //var result = new List<ResultProductDto>();
+            //foreach (var product in values)
+            //{
+            //    var products = new ResultProductDto
+            //    {
+            //        CategoryId = product.CategoryId,
+            //        Description = product.Description,
+            //        ImageUrl = product.ImageUrl,
+            //        Name = product.Name,
+            //        Price = product.Price,
+            //        ProductId = product.Id,
+            //        StockQuantity = product.StockQuantity,
+            //    };
+            //}
             return _mapper.Map<List<ResultProductDto>>(values);
         }
 

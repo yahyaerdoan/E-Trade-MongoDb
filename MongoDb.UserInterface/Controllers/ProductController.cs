@@ -27,7 +27,7 @@ namespace MongoDb.UserInterface.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
-        {
+        {            
             await _productService.CreateProductAsync(createProductDto);
             return RedirectToAction("Index");
         }
