@@ -18,7 +18,8 @@
             <th>Description</th>
             <th>Price</th>
             <th>Stock</th>
-            <th>Category Id</th>
+            <th>Category Name</th>
+            <th>Category Description</th>
             <th>Image Id</th>
             <th>Delete</th>
             <th>Update</th>
@@ -32,6 +33,7 @@
                 <td><span>$</span>@item.Price</td>
                 <td>@item.StockQuantity</td>
                 <td>@item.CategoryName</td>
+                <td>@item.CategoryDescription</td>
                 <td>@if (item.ImageIds.Any())
                     {
                         foreach (var image in item.ImageIds)

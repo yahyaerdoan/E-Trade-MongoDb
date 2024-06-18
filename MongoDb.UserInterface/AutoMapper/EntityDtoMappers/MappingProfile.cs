@@ -20,7 +20,16 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
             CreateMap<Product, ResultProductDto>().ReverseMap();
             CreateMap<Product, GetByIdProductDto>().ReverseMap();
 
-           
+            CreateMap<(Product product, string categoryName, string descriptipon), ResultProductWithCategoryDto>()
+            .ConstructUsing(src => new ResultProductWithCategoryDto(
+                src.product.Id,
+                src.product.Name,
+                src.product.Description,
+                src.product.Price,
+                src.product.StockQuantity,
+                src.product.ImageIds,
+                src.categoryName,
+                src.descriptipon)).ReverseMap();
         }
     }
 }

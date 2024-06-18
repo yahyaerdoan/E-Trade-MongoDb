@@ -7,7 +7,7 @@
                                                 int StockQuantity, 
                                                 //string CategoryId, 
                                                 List<string> ImageIds, 
-                                                string CategoryName
-                                                //string CategoryDescription
+                                                string CategoryName,
+                                                string CategoryDescription
                                               );
 }

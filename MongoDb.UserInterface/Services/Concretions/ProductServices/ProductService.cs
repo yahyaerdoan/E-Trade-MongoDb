@@ -43,21 +43,19 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
 
         public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
         {
-            var categories = await _categoryCollection.Find(x=> true).ToListAsync();
             var products = await _productCollection.Find(x => true).ToListAsync();
-            var result = (from product in products
-                          join category in categories 
-                          on  product.CategoryId equals category.Id
-                          select new ResultProductWithCategoryDto(
-                              product.Id,
-                              product.Name,
-                              product.Description,
-                              product.Price,
-                              product.StockQuantity,
-                              product.ImageIds,
-                              category.Name                           
-                              ) ).ToList();
+            var categories = await _categoryCollection.Find(x => true).ToListAsync();
 
+            var categoryDictionary = categories.ToDictionary(c => c.Id, c => (c.Name, c.Description));
+            var result = products.Select(product =>
+            {
+                var (Name, Description) = categoryDictionary
+                                        .TryGetValue(product.CategoryId, out var details)
+                                        ? details : (Name :string.Empty, Description: string.Empty);
+                var name = Name;
+                var description = Description;
+                return _mapper.Map<ResultProductWithCategoryDto>((product, name, description));
+            }).ToList();
             return result;
 
         }
