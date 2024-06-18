@@ -16,7 +16,7 @@ namespace MongoDb.UserInterface.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var values = await _productService.GetAllAsync();
+            var values = await _productService.GetAllProductWithCategoryAsync();
             return View(values);
         }
         [HttpGet]

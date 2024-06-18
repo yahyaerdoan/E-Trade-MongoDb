@@ -22,11 +22,11 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.CategoryId</td>
+                <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>@item.Description</td>
-                <td> <a href="/Category/DeleteCategory/@item.CategoryId" class="btn  btn-danger">Delete</a></td>
-                <td> <a href="/Category/UpdateCategory/@item.CategoryId" class="btn  btn-success">Update</a></td>
+                <td> <a href="/Category/DeleteCategory/@item.Id" class="btn  btn-danger">Delete</a></td>
+                <td> <a href="/Category/UpdateCategory/@item.Id" class="btn  btn-success">Update</a></td>
             </tr>
         }
     </table>

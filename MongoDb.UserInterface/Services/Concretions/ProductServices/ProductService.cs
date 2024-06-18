@@ -11,6 +11,7 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
     public class ProductService : IProductService
     {
         private readonly IMongoCollection<Product> _productCollection;
+        private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
         public ProductService(IMapper mapper, IDatabaseSettings _databaseSettings)
@@ -18,6 +19,7 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
             var client = new MongoClient(_databaseSettings.ConnectionString);
             var database = client.GetDatabase(_databaseSettings.DatabaseName);
             _productCollection = database.GetCollection<Product>(_databaseSettings.ProductCollectionName);
+            _categoryCollection = database.GetCollection<Category>(_databaseSettings.CategoryCollectionName);
             _mapper = mapper;
         }
 
@@ -37,6 +39,27 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
         {
             var values = await _productCollection.Find(x=> true).ToListAsync();     
             return _mapper.Map<List<ResultProductDto>>(values);
+        }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
+        {
+            var categories = await _categoryCollection.Find(x=> true).ToListAsync();
+            var products = await _productCollection.Find(x => true).ToListAsync();
+            var result = (from product in products
+                          join category in categories 
+                          on  product.CategoryId equals category.Id
+                          select new ResultProductWithCategoryDto(
+                              product.Id,
+                              product.Name,
+                              product.Description,
+                              product.Price,
+                              product.StockQuantity,
+                              product.ImageIds,
+                              category.Name                           
+                              ) ).ToList();
+
+            return result;
+
         }
 
         public async Task<GetByIdProductDto> GetByIdProductAsync(string id)

@@ -1,4 +1,4 @@
-﻿@model List<ResultProductDto>
+﻿@model List<ResultProductWithCategoryDto>
 @{
     Layout = null;
 }
@@ -31,7 +31,7 @@
                 <td>@item.Description</td>
                 <td><span>$</span>@item.Price</td>
                 <td>@item.StockQuantity</td>
-                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
                 <td>@if (item.ImageIds.Any())
                     {
                         foreach (var image in item.ImageIds)

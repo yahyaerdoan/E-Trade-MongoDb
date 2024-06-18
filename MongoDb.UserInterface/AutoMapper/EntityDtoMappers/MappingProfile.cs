@@ -19,6 +19,8 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
             CreateMap<Product, UpdateProductDto>().ReverseMap();
             CreateMap<Product, ResultProductDto>().ReverseMap();
             CreateMap<Product, GetByIdProductDto>().ReverseMap();
+
+           
         }
     }
 }

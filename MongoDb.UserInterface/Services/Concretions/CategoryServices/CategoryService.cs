@@ -28,7 +28,7 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
 
         public async Task DeleteCategoryAsync(string id)
         {
-            await _categoryCollection.DeleteOneAsync(x=> x.CategoryId == id);
+            await _categoryCollection.DeleteOneAsync(x=> x.Id == id);
         }
 
         public async Task<List<ResultCategoryDto>> GetAllAsync()
@@ -39,14 +39,14 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
 
         public async Task<GetByIdCategoryDto> GetByIdCategoryAsync(string id)
         {
-            var values  = await _categoryCollection.Find<Category>(x=> x.CategoryId == id).FirstOrDefaultAsync();
+            var values  = await _categoryCollection.Find<Category>(x=> x.Id == id).FirstOrDefaultAsync();
             return _mapper.Map<GetByIdCategoryDto>(values);
         }
 
         public async Task UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)
         {
             var values = _mapper.Map<Category>(updateCategoryDto);
-            await _categoryCollection.FindOneAndReplaceAsync(x=> x.CategoryId== updateCategoryDto.CategoryId, values);
+            await _categoryCollection.FindOneAndReplaceAsync(x=> x.Id == updateCategoryDto.Id, values);
         }
     }
 }
