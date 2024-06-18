@@ -27,8 +27,15 @@
         <label>Stock</label>
         <input type="text" asp-for="StockQuantity" class="form-control" />
         <br />
-        <label>Category Id</label>
-        <input type="text" asp-for="CategoryId" class="form-control" />
+        <label class="text-danger">Category Name</label>
+        <select asp-for="CategoryId" class="form-control">
+            <option value="" selected disabled style="color: red;">Select a Category</option>
+
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
         <br />
         <label>Image Ids</label>
         @if (Model.ImageIds.Any())
