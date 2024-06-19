@@ -5,19 +5,38 @@ using MongoDb.UserInterface.Services.Abstractions.ProductServices;
 using MongoDb.UserInterface.Services.Concretions.CategoryServices;
 using MongoDb.UserInterface.Services.Concretions.ProductServices;
 using MongoDb.UserInterface.Settings;
+using MongoDb.UserInterface.Settings.MongoDb.Context;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+#region Db Settings For DbContext. I developed.
+
+builder.Services.Configure<MongoDbSettings>(
+    builder.Configuration.GetSection("MongoDbSettings"));
+
+builder.Services.AddScoped<IMongoDbContext, MongoDbContext>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
+    return new MongoDbContext(settings);
+});
+
+#endregion
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+#region Db Settings For Services. This is the Murat teacher's configuration. This is using only for  the product.
+
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
 builder.Services.AddScoped<IDatabaseSettings>(sp =>
 {
     return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 });
+
+#endregion
+
 
 builder.Services.AddControllersWithViews();
 
