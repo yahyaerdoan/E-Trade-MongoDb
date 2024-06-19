@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MongoDb.UserInterface.Dtos.CategoryDto;
+using MongoDb.UserInterface.Dtos.CustomerDtos;
 using MongoDb.UserInterface.Dtos.ProductDto;
 using MongoDb.UserInterface.Entities;
 
@@ -30,6 +31,11 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
                 src.product.ImageIds,
                 src.categoryName,
                 src.descriptipon)).ReverseMap();
+
+            CreateMap<Customer, CreateCustomerDto>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerDto>().ReverseMap();
+            CreateMap<Customer, ResultCustomerDto>().ReverseMap();
+            CreateMap<Customer, GetByIdCustomerDto>().ReverseMap();
         }
     }
 }
