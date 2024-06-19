@@ -1,7 +1,7 @@
 ﻿using MongoDb.UserInterface.Entities;
 using MongoDB.Driver;
 
-namespace MongoDb.UserInterface.Settings.MongoDb.Context
+namespace MongoDb.UserInterface.Settings.MongoDb.NewContext
 {
     public interface IMongoDbContext
     {

@@ -2,8 +2,7 @@
 using MongoDb.UserInterface.Dtos.CategoryDto;
 using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
-using MongoDb.UserInterface.Settings;
-using MongoDb.UserInterface.Settings.MongoDb.Context;
+using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDB.Driver;
 
 namespace MongoDb.UserInterface.Services.Concretions.CategoryServices

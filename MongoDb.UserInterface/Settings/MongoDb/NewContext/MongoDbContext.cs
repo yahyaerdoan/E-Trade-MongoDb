@@ -1,4 +1,5 @@
 ﻿using MongoDb.UserInterface.Entities;
+using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDB.Driver;
 
 namespace MongoDb.UserInterface.Settings.MongoDb.Context
