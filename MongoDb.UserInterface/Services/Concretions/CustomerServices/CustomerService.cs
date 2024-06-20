@@ -26,9 +26,9 @@ namespace MongoDb.UserInterface.Services.Concretions.CustomerServices
             await _mongoDbContext.Customers.InsertOneAsync(values);
         }
 
-        public Task DeleteCustomerAsync(string id)
+        public async Task DeleteCustomerAsync(string id)
         {
-            throw new NotImplementedException();
+            var values = await _mongoDbContext.Customers.DeleteOneAsync(x=> x.Id == id);
         }
 
         public async Task<List<ResultCustomerDto>> GetAllAsync()
@@ -38,14 +38,16 @@ namespace MongoDb.UserInterface.Services.Concretions.CustomerServices
             return _mapper.Map<List<ResultCustomerDto>>(values);
         }
 
-        public Task<GetByIdProductDto> GetByIdProductAsync(string id)
+        public async Task<GetByIdCustomerDto> GetByIdCustomerAsync(string id)
         {
-            throw new NotImplementedException();
+            var values = await _mongoDbContext.Customers.Find<Customer>(x=> x.Id==id).FirstOrDefaultAsync();
+            return _mapper.Map<GetByIdCustomerDto>(values);
         }
 
-        public Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto)
+        public async Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto)
         {
-            throw new NotImplementedException();
+            var values = _mapper.Map<Customer>(updateCustomerDto);
+            await _mongoDbContext.Customers.FindOneAndReplaceAsync(x => x.Id == updateCustomerDto.Id, values);
         }
     }
 }

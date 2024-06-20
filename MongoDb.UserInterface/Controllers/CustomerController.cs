@@ -30,5 +30,24 @@ namespace MongoDb.UserInterface.Controllers
            await _customerService.CreateCustomerAsync(createCustomerDto);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> DeleteCustomer(string id)
+        {
+            await _customerService.DeleteCustomerAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateCustomer(string id)
+        {
+            var values = await _customerService.GetByIdCustomerAsync(id);
+            return View(values);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCustomer(UpdateCustomerDto updateCustomerDto)
+        {
+            await _customerService.UpdateCustomerAsync(updateCustomerDto);
+            return RedirectToAction("Index");
+        }
     }
 }

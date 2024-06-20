@@ -9,6 +9,6 @@ namespace MongoDb.UserInterface.Services.Abstractions.CustomerServices
         Task CreateCustomerAsync(CreateCustomerDto createCustomerDto);
         Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto);
         Task DeleteCustomerAsync(string id);
-        Task<GetByIdProductDto> GetByIdProductAsync(string id);
+        Task<GetByIdCustomerDto> GetByIdCustomerAsync(string id);
     }
 }
