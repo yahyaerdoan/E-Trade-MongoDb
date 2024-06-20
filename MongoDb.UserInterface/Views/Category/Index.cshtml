@@ -3,18 +3,19 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Layout/Index.cshtml";
 }
-
+@{
+    int numberOfData = 0;
+}
 <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!DOCTYPE html>
 <div class="container-fluid">
-    <br />
     <div class="alert alert-primary">
-        <h4>Category List</h4>
+        <h6>Category List</h6>
     </div>
-    <br />
     <table class="table table-hover">
         <tr>
-            <th>Id</th>
+            <th>Number Of Data</th>
+            <th>Category Id</th>
             <th> Name</th>
             <th>Description</th>
             <th>Delete</th>
@@ -22,14 +23,16 @@
         </tr>
         @foreach (var item in Model)
         {
+            numberOfData++;
             <tr>
+                <td><b>@numberOfData</b></td>
                 <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>@item.Description</td>
-                <td> <a href="/Category/DeleteCategory/@item.Id" class="btn  btn-danger">Delete</a></td>
-                <td> <a href="/Category/UpdateCategory/@item.Id" class="btn  btn-success">Update</a></td>
+                <td> <a href="/Category/DeleteCategory/@item.Id" class="btn  btn-outline-danger">Delete</a></td>
+                <td> <a href="/Category/UpdateCategory/@item.Id" class="btn  btn-outline-success">Update</a></td>
             </tr>
         }
     </table>
-    <a href="/Category/CreateCategory" class="btn  btn-success">New Category</a>
+    <a href="/Category/CreateCategory" class="btn  btn-outline-primary">Create New Category</a>
 </div>
