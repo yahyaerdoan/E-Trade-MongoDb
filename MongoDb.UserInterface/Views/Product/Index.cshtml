@@ -4,16 +4,13 @@
     Layout = "~/Views/Layout/Index.cshtml";
 }
 
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-<!DOCTYPE html>
 <div class="container-fluid">
-    <br />
     <div class="alert alert-primary">
-        <h4>Product List</h4>
+        <h6>Product List</h6>
     </div>
-    <br />
     <table class="table table-hover">
         <tr>
+            <th>Number Of Product</th>
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
@@ -28,6 +25,7 @@
         @foreach (var item in Model)    
         {
             <tr>
+                <td><b>@(Model.IndexOf(item) + 1)</b></td>
                 <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>@item.Description</td>
@@ -43,10 +41,12 @@
                         }
                     }
                  </td>
-                <td> <a href="/Product/DeleteProduct/@item.Id" class="btn  btn-danger">Delete</a></td>
-                <td> <a href="/Product/UpdateProduct/@item.Id" class="btn  btn-success">Update</a></td>
+                <td> <a href="/Product/DeleteProduct/@item.Id" class="btn  btn-outline-danger">Delete</a></td>
+                <td> <a href="/Product/UpdateProduct/@item.Id" class="btn  btn-outline-success">Update</a></td>
             </tr>
         }
     </table>
-    <a href="/Product/CreateProduct" class="btn  btn-success">New Product</a>
+    <a href="/Product/CreateProduct" class="btn  btn-outline-success">Create New Product</a>
+    <a href="/Product/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
+    <a href="/Product/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
 </div>

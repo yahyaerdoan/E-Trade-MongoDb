@@ -6,17 +6,16 @@
 @{
     int numberOfData = 0;
 }
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-<!DOCTYPE html>
+
 <div class="container-fluid">
     <div class="alert alert-primary">
         <h6>Category List</h6>
     </div>
     <table class="table table-hover">
         <tr>
-            <th>Number Of Data</th>
+            <th>Number Of Category</th>
             <th>Category Id</th>
-            <th> Name</th>
+            <th>Name</th>
             <th>Description</th>
             <th>Delete</th>
             <th>Update</th>
@@ -36,5 +35,6 @@
     </table>
     <a href="/Category/CreateCategory" class="btn  btn-outline-primary">Create New Category</a>    
     <a href="/Category/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
+    <a href="/Category/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
 
 </div>

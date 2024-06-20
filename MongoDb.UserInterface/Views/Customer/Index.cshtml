@@ -4,15 +4,13 @@
     Layout = "~/Views/Layout/Index.cshtml";
 }
 
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-<!DOCTYPE html>
 <div class="container-fluid">
     <div class="alert alert-primary">
         <h6>Customer List</h6>
     </div>
     <table class="table table-hover">
         <tr>
-            <th>Number Of Data</th>
+            <th>Number Of Customer</th>
             <th>Id</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -35,8 +33,9 @@
             </tr>
         }
     </table>
-    <a href="/Customer/CreateCustomer" class="btn  btn-outline-success">New Customer</a>
+    <a href="/Customer/CreateCustomer" class="btn  btn-outline-success">Create New Customer</a>
     <a href="/Customer/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
+    <a href="/Customer/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
 
 </div>
 

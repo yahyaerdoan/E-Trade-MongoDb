@@ -4,50 +4,67 @@
     Layout = "~/Views/Layout/Index.cshtml";
 }
 
-<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-
-<form method="post">
-    <div class="container-fluid">
-        <br />
-        <div class="alert alert-primary">
-            <h4>Update Product</h4>
-        </div>
-        <br />
-        <label> Name</label>
-        <input type="hidden" asp-for="Id" class="form-control" />
-
-        <input type="text" asp-for="Name" class="form-control" />
-        <br />
-        <label>Description</label>
-        <input type="text" asp-for="Description" class="form-control" />
-        <br />
-        <label>Price</label>
-        <input type="text" asp-for="Price" class="form-control" />
-        <br />
-        <label>Stock</label>
-        <input type="text" asp-for="StockQuantity" class="form-control" />
-        <br />
-        <label class="text-danger">Category Name</label>
-        <select asp-for="CategoryId" class="form-control">
-            <option value="" selected disabled style="color: red;">Select a Category</option>
-
-            @foreach (var category in ViewBag.Categories)
-            {
-                <option value="@category.Id">@category.Name</option>
-            }
-        </select>
-        <br />
-        <label>Image Ids</label>
-        @if (Model.ImageIds.Any())
-        {
-            foreach (var image in Model.ImageIds)
-            {
-                <input type="text" asp-for="ImageIds" value="@image" class="form-control" />
-                <br />
-            }
-        }
-        <br />
-        <button class="btn btn-primary">Update new Product</button>
+<div class="container-fluid">
+    <div class="alert alert-primary">
+        <h6>Update Product</h6>
     </div>
-</form>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" asp-action="UpdateProduct">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label fw-bold"></label>
+                    <input type="hidden" asp-for="Id" class="form-control" />
+
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label fw-bold"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input type="text" asp-for="Price" class="form-control" id="price-input"
+                           value="@Model.Price.ToString("C2")"
+                           onfocus="unformatPrice(this)"
+                           onblur="formatPrice(this)" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StockQuantity" class="control-label fw-bold"></label>
+                    <input asp-for="StockQuantity" class="form-control" />
+                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label fw-bold">Category Name</label>
+                    <select asp-for="CategoryId" class="form-control">
+                        <option value="" selected disabled style="color: red;">Select a Category</option>
+
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageIds" class="control-label fw-bold"></label>
+                    @if (Model.ImageIds.Any())
+                    {
+                        foreach (var image in Model.ImageIds)
+                        {
+                            <input type="text" asp-for="ImageIds" value="@image" class="form-control" />
+                            <br />
+                        }
+                    }
+                    <span asp-validation-for="ImageIds" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-top:1rem">
+                    <input type="submit" value="Update" class="btn btn-outline-primary col-12" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
