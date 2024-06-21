@@ -15,7 +15,7 @@ namespace MongoDb.UserInterface.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var values  = await _categoryService.GetAllAsync();
+            var values = await _categoryService.GetAllAsync();
             return View(values);
         }
 
@@ -48,6 +48,13 @@ namespace MongoDb.UserInterface.Controllers
         {
             await _categoryService.UpdateCategoryAsync(updateCategoryDto);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DownloadPdf()
+        {
+            var values = await _categoryService.GetAllAsync();
+            var pdf = await _categoryService.CreateCategoryListPdfAsync(values);
+            return File(pdf, "application/pdf", "CategoryList.pdf");
         }
     }
 }

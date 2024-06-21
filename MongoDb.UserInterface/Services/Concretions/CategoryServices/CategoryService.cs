@@ -4,6 +4,10 @@ using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDB.Driver;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using System.Collections.Generic;
 
 namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
 {
@@ -37,7 +41,7 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
         {
             var values = _mapper.Map<Category>(createCategoryDto);
             await _mongoDbContext.Categories.InsertOneAsync(values);
-        }
+        }            
 
         public async Task DeleteCategoryAsync(string id)
         {
@@ -60,6 +64,75 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
         {
             var values = _mapper.Map<Category>(updateCategoryDto);
             await _mongoDbContext.Categories.FindOneAndReplaceAsync(x=> x.Id == updateCategoryDto.Id, values);
+        }
+
+        public async Task<byte[]> CreateCategoryListPdfAsync(List<ResultCategoryDto> categories)
+        {
+            var document = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(1, Unit.Centimetre);
+                    page.PageColor(Colors.White);
+                    page.DefaultTextStyle(x => x.FontSize(11));
+
+                    page.Header().AlignCenter()
+                    .Text("Category List")
+                    .SemiBold().FontSize(16).FontColor(Colors.Black);
+
+                    page.Content()
+                    .Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.ConstantColumn(50);
+                            columns.RelativeColumn();
+                            columns.RelativeColumn();
+                            columns.RelativeColumn();
+                        });
+
+                        table.Header(header =>
+                        {
+                            header.Cell().Element(CellStyle).Text("No");
+                            header.Cell().Element(CellStyle).Text("Category Id");
+                            header.Cell().Element(CellStyle).Text("Name");
+                            header.Cell().Element(CellStyle).Text("Description");
+
+                            
+                        });
+
+                        int numberOfData = 0;
+                        foreach (var category in categories)
+                        {
+                            numberOfData++;
+                            table.Cell().Element(CellStyle).Text(numberOfData.ToString());
+                            table.Cell().Element(CellStyle).Text(category.Id);
+                            table.Cell().Element(CellStyle).Text(category.Name);
+                            table.Cell().Element(CellStyle).Text(category.Description);
+                        }
+                        static IContainer CellStyle(IContainer container)
+                        {
+                            return container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
+                        }
+                    });
+
+
+                    page.Footer()
+                        .Column(column =>
+                        {
+                            column.Item().AlignCenter().Text(x =>
+                            {
+                                x.Span("Page ");
+                                x.CurrentPageNumber();
+                                x.Span(" of ");
+                                x.TotalPages();
+                            });
+                            column.Item().AlignCenter().Text("Yahya John Erdogan").FontSize(10).FontColor(Colors.Black);
+                        });
+                });
+            });
+            return await Task.Run(() => document.GeneratePdf()) ;
         }
     }
 }

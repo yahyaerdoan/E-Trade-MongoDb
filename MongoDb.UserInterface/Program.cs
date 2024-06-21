@@ -9,7 +9,8 @@ using MongoDb.UserInterface.Services.Concretions.ProductServices;
 using MongoDb.UserInterface.Settings.MongoDb.Context;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDb.UserInterface.Settings.MongoDb.OldContext;
-using System.Reflection;
+using QuestPDF.Infrastructure;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,7 @@ builder.Services.AddScoped<IDatabaseSettings>(sp =>
 
 #endregion
 
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddControllersWithViews();
 
