@@ -4,6 +4,8 @@ using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDB.Driver;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -133,6 +135,41 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
                 });
             });
             return await Task.Run(() => document.GeneratePdf()) ;
+        }
+
+        public async Task<byte[]> CreateCategoryListExcelAsync(List<ResultCategoryDto> categories)
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Categories");
+
+                // Add headers
+                worksheet.Cells[1, 1].Value = "Number Of Category";
+                worksheet.Cells[1, 2].Value = "Category Id";
+                worksheet.Cells[1, 3].Value = "Name";
+                worksheet.Cells[1, 4].Value = "Description";
+
+                // Add data
+                int numberOfData = 0;
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    numberOfData++;
+                    worksheet.Cells[i + 2, 1].Value = numberOfData;
+                    worksheet.Cells[i + 2, 2].Value = categories[i].Id;
+                    worksheet.Cells[i + 2, 3].Value = categories[i].Name;
+                    worksheet.Cells[i + 2, 4].Value = categories[i].Description;
+                }
+
+                // Format the header
+                using (var range = worksheet.Cells[1, 1, 1, 4])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                }
+
+                return await Task.Run(()=> package.GetAsByteArray());
+            }
         }
     }
 }

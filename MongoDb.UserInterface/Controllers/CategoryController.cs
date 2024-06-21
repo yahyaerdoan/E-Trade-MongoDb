@@ -56,5 +56,12 @@ namespace MongoDb.UserInterface.Controllers
             var pdf = await _categoryService.CreateCategoryListPdfAsync(values);
             return File(pdf, "application/pdf", "CategoryList.pdf");
         }
+
+        public async Task<IActionResult> DownloadExcel()
+        {
+            var values = await _categoryService.GetAllAsync();
+            var excel = await _categoryService.CreateCategoryListExcelAsync(values);
+            return File(excel, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CategoryList.xlsx");
+        }
     }
 }

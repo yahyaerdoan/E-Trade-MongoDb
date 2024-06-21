@@ -10,5 +10,6 @@ namespace MongoDb.UserInterface.Services.Abstractions.CategoryServices
         Task DeleteCategoryAsync(string id);
         Task<GetByIdCategoryDto> GetByIdCategoryAsync(string id);
         Task<byte[]> CreateCategoryListPdfAsync(List<ResultCategoryDto> categories);
+        Task<byte[]> CreateCategoryListExcelAsync(List<ResultCategoryDto> categories);
     }
 }
