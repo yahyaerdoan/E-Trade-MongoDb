@@ -1,32 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MongoDb.UserInterface.Models;
+using MongoDb.UserInterface.Services.Abstractions.ProductServices;
 using System.Diagnostics;
 
 namespace MongoDb.UserInterface.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductService productService)
         {
-            _logger = logger;
+            _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var values = await _productService.GetAllProductWithCategoryAsync();
+            return View(values);
         }
     }
 }

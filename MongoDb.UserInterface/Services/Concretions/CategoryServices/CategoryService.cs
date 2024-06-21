@@ -46,7 +46,7 @@ namespace MongoDb.UserInterface.Services.Concretions.CategoryServices
 
         public async Task<List<ResultCategoryDto>> GetAllAsync()
         {
-            var values = await _mongoDbContext.Categories.Find(x=> true).ToListAsync();
+            var values = await _mongoDbContext.Categories.Find(x=> true).SortBy(x=> x.Name).ToListAsync();
             return _mapper.Map<List<ResultCategoryDto>>(values);
         }
 
