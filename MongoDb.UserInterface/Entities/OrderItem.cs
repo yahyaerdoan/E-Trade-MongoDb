@@ -13,5 +13,6 @@ namespace MongoDb.UserInterface.Entities
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; } // Price at the time of the order
+        public decimal TotalPrice => UnitPrice * Quantity;
     }
 }

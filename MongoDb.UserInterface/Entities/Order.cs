@@ -12,5 +12,6 @@ namespace MongoDb.UserInterface.Entities
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
         public List<OrderItem> OrderItems { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }
