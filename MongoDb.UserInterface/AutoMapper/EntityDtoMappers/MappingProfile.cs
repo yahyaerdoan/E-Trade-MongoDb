@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDb.UserInterface.Dtos.CartItemDto;
 using MongoDb.UserInterface.Dtos.CategoryDto;
 using MongoDb.UserInterface.Dtos.CustomerDtos;
 using MongoDb.UserInterface.Dtos.ProductDto;
@@ -36,6 +37,10 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
             CreateMap<Customer, UpdateCustomerDto>().ReverseMap();
             CreateMap<Customer, ResultCustomerDto>().ReverseMap();
             CreateMap<Customer, GetByIdCustomerDto>().ReverseMap();
+
+            CreateMap<CartItem, ResultCartItemDto>()
+                    .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+                    .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price));
         }
     }
 }

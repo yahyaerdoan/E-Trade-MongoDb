@@ -9,6 +9,8 @@ namespace MongoDb.UserInterface.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string ProductId { get; set; }
+        public Product Product { get; set; }
+
         public int Quantity { get; set; }
     }
 }
