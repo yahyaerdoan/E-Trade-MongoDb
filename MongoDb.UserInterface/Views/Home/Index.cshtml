@@ -50,9 +50,10 @@
                         </div>
                     </div>
                     <div style="background-color:white">
-                        <form asp-action="AddToCart" method="post" style="display: inline;">
-                            <input type="hidden" name="itemId" value="@item.Id" />
-                            <a href="/Cart/AddToCart/@item.Id" type="submit" class="btn btn-outline-success m-2">Add to Cart</a>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display: inline;">
+                            <input type="hidden" name="ProductId" value="@item.Id" /> <!-- Hidden field for product Id -->
+                            <input type="hidden" name="quantity" value="1" /> <!-- Default quantity -->
+                            <button type="submit" class="btn btn-outline-success m-2">Add to Cart</button>
                         </form>
                         <a href="/Home/Index/@item.Id" class="btn btn-outline-primary m-2">Add to Favorite</a>
                     </div>

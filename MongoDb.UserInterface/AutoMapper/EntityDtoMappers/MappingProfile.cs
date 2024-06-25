@@ -38,9 +38,9 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
             CreateMap<Customer, ResultCustomerDto>().ReverseMap();
             CreateMap<Customer, GetByIdCustomerDto>().ReverseMap();
 
-            CreateMap<CartItem, ResultCartItemDto>()
-                    .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
-                    .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price));
+            //CreateMap<CartItem, ResultCartDto>()
+            //        .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+            //        .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price));
         }
     }
 }

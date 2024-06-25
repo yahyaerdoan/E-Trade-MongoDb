@@ -5,6 +5,8 @@ namespace MongoDb.UserInterface.Services.Abstractions.CartService
 {
     public interface ICartService
     {
-        Task AddCartItem(CreateCartItemDto createCartItemDto);
+        Task InitializeCart(string customerId);
+        Task<Cart> GetCartByCustomerIdAsync(string id);
+        Task AddToCartAsync(string customerId, string productId, int quantity);
     }
 }

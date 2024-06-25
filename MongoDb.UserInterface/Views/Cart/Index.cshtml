@@ -1,0 +1,90 @@
+﻿@model ResultCartDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+    <style>
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-control input {
+            width: 60px;
+            text-align: center;
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+            box-shadow: none;
+            height: 31.5px; /* Match the button height */
+        }
+        .quantity-control .btn {
+            border-radius: 1;
+            padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+            height: 31.5px; /* Match the input height */
+        }
+        .quantity-control input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+
+    <div class="container-fluid my-3">
+        <h2 class="mb-4">Shopping Cart</h2>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Number Of Cart Items</th>
+                    <th>Product Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ResultCartItemDtos)
+            {
+                <tr>
+                    <td><b>@(Model.ResultCartItemDtos.IndexOf(item) +1) </b></td>
+                    <td>@item.ProductId</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <div class="quantity-control btn-group" role="group" aria-label="Basic mixed styles example">
+                            <button type="button" class="btn btn-sm btn-outline-danger">-</button>
+                            <input type="number" class="form-control form-control-sm" value="1" min="1">
+                            <button type="button" class="btn btn-sm btn-outline-success">+</button>
+                        </div>
+                    </td>
+                    <td><span></span>@item.StringTypePrice</td>
+                    <td>@((item.Price * item.Quantity).ToString("C2"))</td>
+                    <td><button class="btn btn-sm btn-danger">Delete</button></td>
+                </tr>
+            }             
+               
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="mb-4">Summary</h4>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Subtotal
+                        <span>$60.00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Tax (10%)
+                        <span>$6.00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Total
+                        <span>$66.00</span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary mt-4">Checkout</button>
+            </div>
+        </div>
+    </div>
