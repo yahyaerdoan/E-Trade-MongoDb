@@ -34,25 +34,7 @@ namespace MongoDb.UserInterface.Services.Concretions.CartService
         }
 
         public async Task<Cart> GetCartByCustomerIdAsync(string id)
-        {
-            //var cartFilter = Builders<Cart>.Filter.Eq(c=> c.CustomerId, id);
-            //var cart = await _mongoDbContext.Carts.Find(cartFilter).FirstOrDefaultAsync();
-            //if (cart != null) 
-            //{ 
-            //    var cartItemsFilter = Builders<CartItem>.Filter.Eq(ci=> ci.CartId, id);
-            //    var cartItems = await _mongoDbContext.CartItems.Find(cartItemsFilter).ToListAsync();
-            //    cart.CartItems = cartItems;
-
-            //    var productIds = cartItems.Select(ci=> ci.ProductId).Distinct().ToList();
-            //    var productsFilter = Builders<Product>.Filter.In(p => p.Id, productIds);
-            //    var products = await _mongoDbContext.Products.Find(productsFilter).ToListAsync();
-
-            //    foreach (var cartItem in cartItems) 
-            //    {
-            //        cartItem.Product = products.FirstOrDefault(p => p.Id == cartItem.ProductId);
-            //    }
-            //}
-            //return cart;
+        {            
             return await _mongoDbContext.Carts.Find(x => x.CustomerId == id).FirstOrDefaultAsync();
         }
 

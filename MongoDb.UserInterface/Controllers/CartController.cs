@@ -11,32 +11,34 @@ namespace MongoDb.UserInterface.Controllers
     {
         private readonly ICartService _cartService;
         private readonly ICustomerService _customerService;
+        private readonly IProductService _productService;
 
-        public CartController(ICartService cartService, ICustomerService customerService)
+        public CartController(ICartService cartService, ICustomerService customerService, IProductService productService)
         {
             _cartService = cartService;
             _customerService = customerService;
+            _productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
             var customerId = await _customerService.GetByIdCustomerAsync("66736111cd2dfff3d08a7c32");
             var cart = await _cartService.GetCartByCustomerIdAsync(customerId.Id);
-            return View(new ResultCartDto()
+
+            var resultCartItemDtos = new List<ResultCartItemDto>();
+            foreach (var cartItem in cart.CartItems)
             {
-                Id = cart.Id,
-                ResultCartItemDtos = cart.CartItems.Select(i => new ResultCartItemDto()
+                var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
+                resultCartItemDtos.Add(new ResultCartItemDto
                 {
-                    //Id = i.Id,
-                    ProductId = i.ProductId,
-                    //Name = i.Product.Name,
-                    //Description = i.Product.Description,
-                    //Price = i.Product.Price,
-                    Quantity = i.Quantity
-
-                }).ToList()
-            });
-
+                    ProductId = cartItem.ProductId,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Quantity = cartItem.Quantity  
+                });
+            }
+            return View(new ResultCartDto {Id = cart.Id, ResultCartItemDtos = resultCartItemDtos });
         }
 
         [HttpPost]
