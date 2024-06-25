@@ -10,13 +10,11 @@ namespace MongoDb.UserInterface.Controllers
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
 
-        public CartController(ICartService cartService, IProductService productService, ICustomerService customerService)
+        public CartController(ICartService cartService, ICustomerService customerService)
         {
             _cartService = cartService;
-            _productService = productService;
             _customerService = customerService;
         }
 

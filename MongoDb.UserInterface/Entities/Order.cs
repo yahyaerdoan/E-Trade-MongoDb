@@ -11,7 +11,7 @@ namespace MongoDb.UserInterface.Entities
         public DateTime OrderDate { get; set; }
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
+        public List<CartItem> CartItems { get; set; }
         public decimal TotalAmount { get; set; }
     }
 }
