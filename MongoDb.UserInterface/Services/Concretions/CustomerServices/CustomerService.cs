@@ -44,6 +44,12 @@ namespace MongoDb.UserInterface.Services.Concretions.CustomerServices
             return _mapper.Map<GetByIdCustomerDto>(values);
         }
 
+        public string GetCustomerByStaticId()
+        {
+            var customerId = "66736111cd2dfff3d08a7c32";
+            return  customerId;
+        }
+
         public async Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto)
         {
             var values = _mapper.Map<Customer>(updateCustomerDto);

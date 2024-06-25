@@ -22,7 +22,8 @@ namespace MongoDb.UserInterface.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var customerId = await _customerService.GetByIdCustomerAsync("66736111cd2dfff3d08a7c32");
+            var staticCustomerId = _customerService.GetCustomerByStaticId();
+            var customerId = await _customerService.GetByIdCustomerAsync(staticCustomerId);
             var cart = await _cartService.GetCartByCustomerIdAsync(customerId.Id);
 
             var resultCartItemDtos = new List<ResultCartItemDto>();
@@ -44,7 +45,7 @@ namespace MongoDb.UserInterface.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(string productId, int quantity)
         {
-            string staticCustomerId = "66736111cd2dfff3d08a7c32";
+            var staticCustomerId = _customerService.GetCustomerByStaticId();
             await _cartService.InitializeCart(staticCustomerId);
 
             var cart = await _cartService.GetCartByCustomerIdAsync(staticCustomerId);

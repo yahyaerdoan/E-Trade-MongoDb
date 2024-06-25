@@ -1,5 +1,4 @@
 ﻿using MongoDb.UserInterface.Dtos.CustomerDtos;
-using MongoDb.UserInterface.Dtos.ProductDto;
 
 namespace MongoDb.UserInterface.Services.Abstractions.CustomerServices
 {
@@ -10,5 +9,6 @@ namespace MongoDb.UserInterface.Services.Abstractions.CustomerServices
         Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto);
         Task DeleteCustomerAsync(string id);
         Task<GetByIdCustomerDto> GetByIdCustomerAsync(string id);
+        string GetCustomerByStaticId();
     }
 }
