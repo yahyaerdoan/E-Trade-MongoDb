@@ -54,7 +54,7 @@ namespace MongoDb.UserInterface.Controllers
                 await _cartService.AddToCartAsync(cart.Id, productId, quantity);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

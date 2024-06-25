@@ -10,14 +10,10 @@ namespace MongoDb.UserInterface.Controllers
     public class HomeController : Controller
     {
         private readonly IProductService _productService;
-        private  readonly ICartService _cartService;
-        private  readonly ICustomerService _customerService;
 
-        public HomeController(IProductService productService, ICartService cartService, ICustomerService customerService)
+        public HomeController(IProductService productService)
         {
             _productService = productService;
-            _cartService = cartService;
-            _customerService = customerService;
         }
 
         public async Task<IActionResult> Index()
