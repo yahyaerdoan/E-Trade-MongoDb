@@ -64,13 +64,13 @@
                             <form asp-action="UpdateQuantity" method="post" style="display:inline;">
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <input type="hidden" name="change" value="-1" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger btn-decrease" @(item.Quantity <= 1 ? "disabled" : "")>-</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-decrease" @(item.Quantity <= 1 ? "disabled" : "") style="width: 40px; height: 35px; border-top-right-radius: 0; border-bottom-right-radius: 0;">-</button>
                             </form>
-                            <input type="number" class="form-control form-control-sm" value="@item.Quantity" min="1" step="1" readonly />
+                            <input type="number" class="form-control form-control-sm" value="@item.Quantity" min="1" step="1" readonly style="width: 60px; text-align: center; border-radius: 0; height: 35px;" />
                             <form asp-action="UpdateQuantity" method="post" style="display:inline;">
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <input type="hidden" name="change" value="1" />
-                                <button type="submit" class="btn btn-sm btn-outline-success btn-increase">+</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success btn-increase" style="width: 40px; height: 35px; border-top-left-radius: 0; border-bottom-left-radius: 0;">+</button>
                             </form>
                         </div>
                     </td>
@@ -79,9 +79,10 @@
                     <td>
                         <form asp-action="DeleteCartItem" method="post" style="display:inline;">
                             <input type="hidden" name="productId" value="@item.ProductId" />
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger" style="width: 80px; height: 35px;">Delete</button>
                         </form>
-                    </td>                    
+                    </td>
+
                 </tr>
             }             
                
