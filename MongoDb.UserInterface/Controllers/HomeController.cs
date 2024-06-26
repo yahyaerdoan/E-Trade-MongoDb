@@ -22,11 +22,13 @@ namespace MongoDb.UserInterface.Controllers
             _customerService = customerService;
             _cartService = cartService;
         }
-
+        private string GetStaticCustomerId()
+        {
+            return _customerService.GetCustomerByStaticId();
+        }
         public async Task<IActionResult> Index()
         {
-            var staticCustomerId = _customerService.GetCustomerByStaticId();
-            var cart = await _cartService.GetCartByCustomerIdAsync(staticCustomerId);
+            var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
 
             var cartQuantities = new Dictionary<string, int>();
 
@@ -39,6 +41,16 @@ namespace MongoDb.UserInterface.Controllers
 
             var values = await _productService.GetAllProductWithCategoryAsync();
             return View(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(string productId, int change)
+        {
+            var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
+
+            await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+
+            return RedirectToAction("Index");
         }
     }
 }
