@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.CodeAnalysis;
-using MongoDb.UserInterface.Dtos.CartItemDto;
 using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.CartService;
-using MongoDb.UserInterface.Settings.MongoDb.Context;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
 using MongoDB.Bson;
 using MongoDB.Driver;

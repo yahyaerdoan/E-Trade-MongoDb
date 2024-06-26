@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDb.UserInterface.Dtos.CartItemDto;
-using MongoDb.UserInterface.Models;
 using MongoDb.UserInterface.Services.Abstractions.CartService;
 using MongoDb.UserInterface.Services.Abstractions.CustomerServices;
 using MongoDb.UserInterface.Services.Abstractions.ProductServices;
-using MongoDb.UserInterface.Services.Concretions.CartService;
-using MongoDb.UserInterface.Services.Concretions.CustomerServices;
-using System.Diagnostics;
 
 namespace MongoDb.UserInterface.Controllers
 {
