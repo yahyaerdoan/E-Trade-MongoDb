@@ -4,10 +4,47 @@
     Layout = "~/Views/Layout/Index.cshtml";
 }
 
+@{
+    var cartQuantities = ViewBag.CartQuantities as Dictionary<string, int>;
+}
+<style>
+    .quantity-control {
+        display: flex;
+        align-items: center;
+    }
+    .quantity-control input {
+        width: 60px;
+        text-align: center;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        box-shadow: none;
+        height: 31.5px; /* Match the button height */
+    }
+    .quantity-control .btn-decrease {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+        height: 31.5px; /* Match the input height */
+    }
+    .quantity-control .btn-increase {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+        height: 31.5px; /* Match the input height */
+    }
+    .quantity-control input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+</style>
+
 <div class="container-fluid mt-1">
     <div class="row">
         @foreach (var item in Model)
         {
+            var isInCart = cartQuantities != null && cartQuantities.ContainsKey(item.Id) && cartQuantities[item.Id] > 0;
+            var cartQuantity = isInCart ? cartQuantities[item.Id] : 0;
             <div class="col-md-3 mb-2">
                 <div class="card h-100 d-flex flex-column">
                     <div class="row g-0 flex-grow-1">
@@ -49,14 +86,40 @@
                             </div>
                         </div>
                     </div>
-                    <div style="background-color:white">
-                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display: inline;">
-                            <input type="hidden" name="ProductId" value="@item.Id" /> <!-- Hidden field for product Id -->
-                            <input type="hidden" name="quantity" value="1" /> <!-- Default quantity -->
-                            <button type="submit" class="btn btn-outline-success m-2">Add to Cart</button>
-                        </form>
-                        <a href="/Home/Index/@item.Id" class="btn btn-outline-primary m-2">Add to Favorite</a>
+                    <div style="background-color:white; padding: 10px;">
+                        <div class="d-flex align-items-center" role="group" aria-label="Basic mixed styles example">
+                            @if (isInCart)
+                            {
+                                <div class="d-flex align-items-center">
+                                    <form asp-action="UpdateQuantity" method="post" style="display:inline;">
+                                        <input type="hidden" name="productId" value="@item.Id" />
+                                        <input type="hidden" name="change" value="-1" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" style="border-top-right-radius: 0; border-bottom-right-radius: 0; height: 38px;" @(cartQuantity <= 1 ? "disabled" : "")>-</button>
+                                    </form>
+                                    <input type="number" class="form-control form-control-sm" value="@cartQuantity" min="1" step="1" readonly style="width: 60px; text-align: center; border-radius: 0; height: 38px;" />
+                                    <form asp-action="UpdateQuantity" method="post" style="display:inline;">
+                                        <input type="hidden" name="productId" value="@item.Id" />
+                                        <input type="hidden" name="change" value="1" />
+                                        <button type="submit" class="btn btn-sm btn-outline-success" style="border-top-left-radius: 0; border-bottom-left-radius: 0; height: 38px;">+</button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center">
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display: inline;">
+                                        <input type="hidden" name="ProductId" value="@item.Id" /> <!-- Hidden field for product Id -->
+                                        <input type="hidden" name="quantity" value="1" /> <!-- Default quantity -->
+                                        <button type="submit" class="btn btn-outline-success" style="margin-right: 5px; height: 38px;">Add to Cart</button>
+                                    </form>
+                                </div>
+                            }
+                            <a href="/Home/Index/@item.Id" class="btn btn-outline-primary" style="margin-left: 5px; height: 38px;">Add to Favorite</a>
+                        </div>
                     </div>
+
+
+
                 </div>
             </div>
         }

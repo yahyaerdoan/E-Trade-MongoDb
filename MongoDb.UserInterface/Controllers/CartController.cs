@@ -29,6 +29,9 @@ namespace MongoDb.UserInterface.Controllers
             var cart = await _cartService.GetCartByCustomerIdAsync(customerId.Id);
 
             var resultCartItemDtos = new List<ResultCartItemDto>();
+
+            var cartQuantities = new Dictionary<string, int>();
+
             foreach (var cartItem in cart.CartItems)
             {
                 var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
@@ -40,7 +43,12 @@ namespace MongoDb.UserInterface.Controllers
                     Price = product.Price,
                     Quantity = cartItem.Quantity  
                 });
+
+                cartQuantities[cartItem.ProductId.ToString()] = cartItem.Quantity;
             }
+
+            ViewBag.CartQuantities = cartQuantities;
+
             return View(new ResultCartDto {Id = cart.Id, ResultCartItemDtos = resultCartItemDtos });
         }
 
