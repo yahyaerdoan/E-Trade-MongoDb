@@ -8,10 +8,41 @@ namespace MongoDb.UserInterface.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
+
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public List<CartItem> CartItems { get; set; }
-        public decimal TotalAmount { get; set; }
+
+        public string FirstName { get; set; }
+        public string lastName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public string OrderNote { get; set; }
+
+        public string PaymentId { get; set; }
+        public string PaymentToken { get; set; }
+        public string CoversationId { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
+        public EnumOrderState OrderState { get; set; }
+        public EnumPaymentType PaymentType { get; set; }
+    }
+
+    public enum EnumOrderState
+    {
+        Waiting = 0,
+        UnPaid = 1,
+        Completed = 2,
+    }
+
+    public enum EnumPaymentType
+    {
+        CreditCard= 0,
+        Zell = 1
     }
 }

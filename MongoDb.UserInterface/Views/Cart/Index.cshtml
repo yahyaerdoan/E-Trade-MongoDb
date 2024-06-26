@@ -42,7 +42,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>Number Of Cart Items</th>
-                    <th>Product Id</th>
+                    @* <th>Product Id</th> *@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Quantity of Purchase</th>
@@ -56,7 +56,7 @@
             {
                 <tr>
                     <td><b>@(Model.ResultCartItemDtos.IndexOf(item) +1) </b></td>
-                    <td>@item.ProductId</td>
+                    @* <td>@item.ProductId</td> *@
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td>
@@ -82,10 +82,8 @@
                             <button type="submit" class="btn btn-sm btn-danger" style="width: 80px; height: 35px;">Delete</button>
                         </form>
                     </td>
-
                 </tr>
-            }             
-               
+            }  
             </tbody>
         </table>
 
