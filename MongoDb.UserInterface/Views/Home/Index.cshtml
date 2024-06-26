@@ -7,38 +7,6 @@
 @{
     var cartQuantities = ViewBag.CartQuantities as Dictionary<string, int>;
 }
-<style>
-    .quantity-control {
-        display: flex;
-        align-items: center;
-    }
-    .quantity-control input {
-        width: 60px;
-        text-align: center;
-        border-left: 0;
-        border-right: 0;
-        border-radius: 0;
-        box-shadow: none;
-        height: 31.5px; /* Match the button height */
-    }
-    .quantity-control .btn-decrease {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
-        height: 31.5px; /* Match the input height */
-    }
-    .quantity-control .btn-increase {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
-        height: 31.5px; /* Match the input height */
-    }
-    .quantity-control input:focus {
-        outline: none;
-        box-shadow: none;
-    }
-</style>
-
 <div class="container-fluid mt-1">
     <div class="row">
         @foreach (var item in Model)
@@ -117,9 +85,6 @@
                             <a href="/Home/Index/@item.Id" class="btn btn-outline-primary" style="margin-left: 5px; height: 38px;">Add to Favorite</a>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         }
