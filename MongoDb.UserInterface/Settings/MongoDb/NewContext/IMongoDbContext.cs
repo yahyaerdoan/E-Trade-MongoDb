@@ -12,5 +12,6 @@ namespace MongoDb.UserInterface.Settings.MongoDb.NewContext
         IMongoCollection<Product> Products { get; }
         IMongoCollection<Cart> Carts { get; }
         IMongoCollection<CartItem> CartItems { get; }
+        IMongoCollection<OrderItem> OrderItems { get; }
     }
 }

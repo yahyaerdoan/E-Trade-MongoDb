@@ -25,6 +25,7 @@ namespace MongoDb.UserInterface.Settings.MongoDb.Context
         public IMongoCollection<Cart> Carts => _database.GetCollection<Cart>("Carts");
 
         public IMongoCollection<CartItem> CartItems => _database.GetCollection<CartItem>("CartItems");
+        public IMongoCollection<OrderItem> OrderItems => _database.GetCollection<OrderItem>("OrderItems");
 
     }
 }
