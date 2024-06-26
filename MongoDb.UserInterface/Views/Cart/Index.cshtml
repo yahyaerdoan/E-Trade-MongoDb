@@ -76,7 +76,12 @@
                     </td>
                     <td><span></span>@item.StringTypePrice</td>
                     <td>@((item.Price * item.Quantity).ToString("C2"))</td>
-                    <td><button class="btn btn-sm btn-danger">Delete</button></td>
+                    <td>
+                        <form asp-action="DeleteCartItem" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>                    
                 </tr>
             }             
                

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using MongoDb.UserInterface.Dtos.CartItemDto;
 using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.CartService;
@@ -66,6 +67,17 @@ namespace MongoDb.UserInterface.Controllers
             var cart = await _cartService.GetCartByCustomerIdAsync(customerId.Id);
 
             await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCartItem(string productId)
+        {
+            var staticCustomerId = _customerService.GetCustomerByStaticId();
+            var customer = await _customerService.GetByIdCustomerAsync(staticCustomerId);
+
+            await _cartService.DeleteCartItemAsync(customer.Id, productId);
 
             return RedirectToAction("Index");
         }
