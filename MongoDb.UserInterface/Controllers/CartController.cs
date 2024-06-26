@@ -58,7 +58,16 @@ namespace MongoDb.UserInterface.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(string productId, int change)
+        {
+            var staticCustomerId = _customerService.GetCustomerByStaticId();
+            var customerId = await _customerService.GetByIdCustomerAsync(staticCustomerId);
+            var cart = await _cartService.GetCartByCustomerIdAsync(customerId.Id);
 
+            await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+
+            return RedirectToAction("Index");
+        }
     }
 }

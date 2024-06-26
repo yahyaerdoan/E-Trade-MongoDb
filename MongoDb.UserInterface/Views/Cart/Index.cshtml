@@ -64,7 +64,7 @@
                             <form asp-action="UpdateQuantity" method="post" style="display:inline;">
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <input type="hidden" name="change" value="-1" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger btn-decrease">-</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-decrease" @(item.Quantity <= 1 ? "disabled" : "")>-</button>
                             </form>
                             <input type="number" class="form-control form-control-sm" value="@item.Quantity" min="1" step="1" readonly />
                             <form asp-action="UpdateQuantity" method="post" style="display:inline;">
