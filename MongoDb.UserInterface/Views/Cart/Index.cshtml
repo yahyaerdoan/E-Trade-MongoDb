@@ -4,30 +4,37 @@
     Layout = "~/Views/Layout/Index.cshtml";
 }
 
-    <style>
-        .quantity-control {
-            display: flex;
-            align-items: center;
-        }
-        .quantity-control input {
-            width: 60px;
-            text-align: center;
-            border-left: 0;
-            border-right: 0;
-            border-radius: 0;
-            box-shadow: none;
-            height: 31.5px; /* Match the button height */
-        }
-        .quantity-control .btn {
-            border-radius: 1;
-            padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
-            height: 31.5px; /* Match the input height */
-        }
-        .quantity-control input:focus {
-            outline: none;
-            box-shadow: none;
-        }
-    </style>
+<style>
+    .quantity-control {
+        display: flex;
+        align-items: center;
+    }
+    .quantity-control input {
+        width: 60px;
+        text-align: center;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        box-shadow: none;
+        height: 31.5px; /* Match the button height */
+    }
+    .quantity-control .btn-decrease {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+        height: 31.5px; /* Match the input height */
+    }
+    .quantity-control .btn-increase {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+        height: 31.5px; /* Match the input height */
+    }
+    .quantity-control input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+</style>
 
     <div class="container-fluid my-3">
         <h2 class="mb-4">Shopping Cart</h2>
@@ -54,9 +61,17 @@
                     <td>@item.Description</td>
                     <td>
                         <div class="quantity-control btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-sm btn-outline-danger">-</button>
-                            <input type="number" class="form-control form-control-sm" value="1" min="1">
-                            <button type="button" class="btn btn-sm btn-outline-success">+</button>
+                            <form asp-action="UpdateQuantity" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <input type="hidden" name="change" value="-1" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-decrease">-</button>
+                            </form>
+                            <input type="number" class="form-control form-control-sm" value="@item.Quantity" min="1" step="1" readonly />
+                            <form asp-action="UpdateQuantity" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <input type="hidden" name="change" value="1" />
+                                <button type="submit" class="btn btn-sm btn-outline-success btn-increase">+</button>
+                            </form>
                         </div>
                     </td>
                     <td><span></span>@item.StringTypePrice</td>
@@ -74,15 +89,15 @@
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Subtotal
-                        <span>$60.00</span>
+                        <span>@Model.TotalAmount().ToString("C2")</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Tax (10%)
-                        <span>$6.00</span>
+                    Tax (10.25%)
+                        <span>@Model.TaxAmount().ToString("C2")</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Total
-                        <span>$66.00</span>
+                        <span>@Model.WithTaxTotalAmount().ToString("C2")</span>
                     </li>
                 </ul>
                 <button class="btn btn-primary mt-4">Checkout</button>

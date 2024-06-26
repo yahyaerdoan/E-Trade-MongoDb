@@ -7,7 +7,21 @@ namespace MongoDb.UserInterface.Dtos.CartItemDto
         public string Id { get; set; }
         public List<ResultCartItemDto> ResultCartItemDtos { get; set; }
 
-
+        public decimal TotalAmount()
+        {
+            return ResultCartItemDtos.Sum(x => x.Price * x.Quantity);
+        }       
+        public decimal TaxAmount() 
+        {
+            decimal taxRate = 0.1025m;
+            decimal subTotal = ResultCartItemDtos.Sum(x=> x.Price * x.Quantity);
+            decimal taxAmount = subTotal * taxRate;
+            return taxAmount;
+        }
+        public decimal WithTaxTotalAmount() 
+        {
+            return TotalAmount() + TaxAmount();
+        }
     }
 
     public class ResultCartItemDto

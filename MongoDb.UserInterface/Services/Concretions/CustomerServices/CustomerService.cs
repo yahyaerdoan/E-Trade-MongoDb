@@ -46,7 +46,7 @@ namespace MongoDb.UserInterface.Services.Concretions.CustomerServices
 
         public string GetCustomerByStaticId()
         {
-            var customerId = "66736111cd2dfff3d08a7c32";
+            var customerId = "667363e416637e439fd89a3c";
             return  customerId;
         }
 
