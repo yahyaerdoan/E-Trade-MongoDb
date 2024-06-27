@@ -1,9 +1,15 @@
 ﻿using MongoDb.UserInterface.Entities;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace MongoDb.UserInterface.Dtos.OrderDtos
 {
     public class CreateOrderDto
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
+        public string CartId { get; set; }
         public string OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public string CustomerId { get; set; }

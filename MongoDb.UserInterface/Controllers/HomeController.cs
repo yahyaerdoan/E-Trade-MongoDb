@@ -25,14 +25,20 @@ namespace MongoDb.UserInterface.Controllers
         {
             var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
 
-            var cartQuantities = new Dictionary<string, int>();
-
-            foreach (var cartItem in cart.CartItems)
+            // Check if cart or cart.CartItems is null
+            if (cart == null || cart.CartItems == null)
             {
-                cartQuantities[cartItem.ProductId.ToString()] = cartItem.Quantity;
+                ViewBag.CartQuantities = new Dictionary<string, int>();
             }
-
-            ViewBag.CartQuantities = cartQuantities;
+            else
+            {
+                var cartQuantities = new Dictionary<string, int>();
+                foreach (var cartItem in cart.CartItems)
+                {
+                    cartQuantities[cartItem.ProductId.ToString()] = cartItem.Quantity;
+                }
+                ViewBag.CartQuantities = cartQuantities;
+            }
 
             var values = await _productService.GetAllProductWithCategoryAsync();
             return View(values);

@@ -15,7 +15,7 @@ namespace MongoDb.UserInterface.Services.Concretions.OrderService
 
         public void Create(Order order)
         {
-            _mongoDbContext.Orders.InsertOneAsync(order);
+            _mongoDbContext.Orders.InsertOne(order);
         }
     }
 }

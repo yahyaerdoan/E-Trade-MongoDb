@@ -45,6 +45,7 @@ namespace MongoDb.UserInterface.Controllers
 
             var cartQuantities = new Dictionary<string, int>();
 
+
             foreach (var cartItem in cart.CartItems)
             {
                 var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
@@ -76,6 +77,32 @@ namespace MongoDb.UserInterface.Controllers
             var userId = GetStaticCustomerId();
             var cart = await _cartService.GetCartByCustomerIdAsync(userId);
 
+            // Initialize CreateOrderDto if it's null
+            if (model.CreateOrderDto == null)
+            {
+                model.CreateOrderDto = new CreateOrderDto
+                {
+                    //OrderDate = DateTime.Now,
+                    CustomerId = userId,
+                    // Set other properties from the form data or user info
+                };
+            }
+
+            // Initialize ResultCartDto if it's null
+            if (model.ResultCartDto == null)
+            {
+                model.ResultCartDto = new ResultCartDto
+                {
+                    Id = cart.Id,
+                    //ResultCartItemDtos = new List<ResultCartItemDto>()
+                };
+            }
+
+            // Ensure ResultCartItemDtos is initialized
+            if (model.ResultCartDto.ResultCartItemDtos == null)
+            {
+                model.ResultCartDto.ResultCartItemDtos = new List<ResultCartItemDto>();
+            }
             foreach (var cartItem in cart.CartItems)
             {
                 var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
@@ -93,14 +120,15 @@ namespace MongoDb.UserInterface.Controllers
             }
 
             SaveOrder(model, userId);
-            //ClearCart(userId);
+            await ClearCart(userId);
 
-            return View("Index", model);
+            return RedirectToAction("Index", "Home");
         }
         private void SaveOrder(ResultOrderDto model, string userId)
         {
             var order = new Order()
             {
+                CartId = model.ResultCartDto.Id,
                 OrderNumber = new Random().Next(111111, 999999).ToString(),
                 OrderState = EnumOrderState.Completed,
                 PaymentType = EnumPaymentType.CreditCard,
@@ -114,8 +142,7 @@ namespace MongoDb.UserInterface.Controllers
                 State = model.CreateOrderDto.State,
                 Country = model.CreateOrderDto.Country,
                 OrderNote = model.CreateOrderDto.OrderNote,
-                CustomerId = userId,
-                Id = model.ResultCartDto.Id,
+                CustomerId = userId,               
                 OrderItems = new List<OrderItem>()
             };
 
@@ -134,9 +161,9 @@ namespace MongoDb.UserInterface.Controllers
             _orderService.Create(order);
 
         }
-        private void ClearCart(string userId)
+        private async Task ClearCart(string userId)
         {
-            throw new NotImplementedException();
-        }     
+            await _cartService.ClearCartByCustomerIdAsync(userId);
+        }
     }
 }

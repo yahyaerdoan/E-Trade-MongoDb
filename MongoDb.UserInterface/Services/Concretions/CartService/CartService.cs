@@ -76,6 +76,13 @@ namespace MongoDb.UserInterface.Services.Concretions.CartService
             #endregion
         }
 
+        public async Task ClearCartByCustomerIdAsync(string customerId)
+        {
+            var filter = Builders<Cart>.Filter.Eq(cart => cart.CustomerId, customerId);
+            var update = Builders<Cart>.Update.Set(cart => cart.CartItems, new List<CartItem>());
+            await _mongoDbContext.Carts.UpdateOneAsync(filter, update);
+        }
+
         public async Task DeleteCartItemAsync(string customerId,string productId)
         {
             var filter = Builders<Cart>.Filter.Eq(x => x.CustomerId, customerId);
