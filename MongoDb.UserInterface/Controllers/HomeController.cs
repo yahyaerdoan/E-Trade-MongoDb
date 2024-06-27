@@ -48,8 +48,11 @@ namespace MongoDb.UserInterface.Controllers
         public async Task<IActionResult> UpdateQuantity(string productId, int change)
         {
             var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
-
-            await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+            var isOutOfStock = await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+            if (isOutOfStock)
+            {
+                ViewBag.ProductOutOfStock = true;
+            }
 
             return RedirectToAction("Index");
         }
