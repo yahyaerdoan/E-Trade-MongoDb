@@ -9,49 +9,63 @@
     <div class="row">
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" novalidate>
+            <form asp-action="Checkout" method="post" class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <label>First Name</label>
+                        <input type="text" class="form-control" asp-for="@Model.CreateOrderDto.FirstName" placeholder="" value="" required>                        
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" asp-for="@Model.CreateOrderDto.LastName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                             Valid last name is required.
                         </div>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email">E-mail <span class="text-muted"></span></label>
+                        <input type="email" class="form-control" asp-for="@Model.CreateOrderDto.Email" placeholder="youremailaddress@example.com">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                    <div class="invalid-feedback">
-                        Please enter your shipping address.
+                    <div class="col-md-6 mb-3">
+                        <label for="email">Phone Number <span class="text-muted"></span></label>
+                        <input type="tel" class="form-control" asp-for="@Model.CreateOrderDto.Phone" placeholder="000-000-0000">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                </div> 
+               
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="address">Address</label>
+                        <textarea rows="1" type="text" class="form-control" asp-for="@Model.CreateOrderDto.Address" placeholder="1234 Main St. Apartment: 1" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="address">City</label>
+                        <input type="text" class="form-control" asp-for="@Model.CreateOrderDto.City" placeholder="city" required>
+                        <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <label for="country">Country</label>
-                        <select class="form-control d-block w-100" id="country" required>
+                        <select class="form-control d-block w-100" asp-for="@Model.CreateOrderDto.Country" required>
                             <option value="">Choose...</option>
                             <option>United States</option>
                         </select>
@@ -61,9 +75,59 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="state">State</label>
-                        <select class="form-control d-block w-100" id="state" required>
+                        <select class="form-control d-block w-100" asp-for="@Model.CreateOrderDto.State" required>
                             <option value="">Choose...</option>
+                            <option>Alabama</option>
+                            <option>Alaska</option>
+                            <option>Arizona</option>
+                            <option>Arkansas</option>
                             <option>California</option>
+                            <option>Colorado</option>
+                            <option>Connecticut</option>
+                            <option>Delaware</option>
+                            <option>Florida</option>
+                            <option>Georgia</option>
+                            <option>Hawaii</option>
+                            <option>Idaho</option>
+                            <option>Illinois</option>
+                            <option>Indiana</option>
+                            <option>Iowa</option>
+                            <option>Kansas</option>
+                            <option>Kentucky</option>
+                            <option>Louisiana</option>
+                            <option>Maine</option>
+                            <option>Maryland</option>
+                            <option>Massachusetts</option>
+                            <option>Michigan</option>
+                            <option>Minnesota</option>
+                            <option>Mississippi</option>
+                            <option>Missouri</option>
+                            <option>Montana</option>
+                            <option>Nebraska</option>
+                            <option>Nevada</option>
+                            <option>New Hampshire</option>
+                            <option>New Jersey</option>
+                            <option>New Mexico</option>
+                            <option>New York</option>
+                            <option>North Carolina</option>
+                            <option>North Dakota</option>
+                            <option>Ohio</option>
+                            <option>Oklahoma</option>
+                            <option>Oregon</option>
+                            <option>Pennsylvania</option>
+                            <option>Rhode Island</option>
+                            <option>South Carolina</option>
+                            <option>South Dakota</option>
+                            <option>Tennessee</option>
+                            <option>Texas</option>
+                            <option>Utah</option>
+                            <option>Vermont</option>
+                            <option>Virginia</option>
+                            <option>Washington</option>
+                            <option>West Virginia</option>
+                            <option>Wisconsin</option>
+                            <option>Wyoming</option>
+
                         </select>
                         <div class="invalid-feedback">
                             Please provide a valid state.
@@ -76,6 +140,14 @@
                             Zip code required.
                         </div>
                     </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Order Note</label>
+                    <textarea rows="3" type="text" class="form-control" asp-for="@Model.CreateOrderDto.OrderNote" placeholder="Order note..." required></textarea>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>                    
                 </div>
                 <hr class="mb-4">
 
@@ -144,7 +216,7 @@
         </div>
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your Cart <span> @Model.</span> </span>
+                <span class="text-muted">Your Cart <span></span> </span>
                 <span class="badge badge-secondary badge-pill">4</span>
             </h4>
             <ul class="list-group mb-3">

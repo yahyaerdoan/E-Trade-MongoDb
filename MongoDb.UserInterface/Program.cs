@@ -3,10 +3,12 @@ using MongoDb.UserInterface.AutoMapper.EntityDtoMappers;
 using MongoDb.UserInterface.Services.Abstractions.CartService;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
 using MongoDb.UserInterface.Services.Abstractions.CustomerServices;
+using MongoDb.UserInterface.Services.Abstractions.OrderService;
 using MongoDb.UserInterface.Services.Abstractions.ProductServices;
 using MongoDb.UserInterface.Services.Concretions.CartService;
 using MongoDb.UserInterface.Services.Concretions.CategoryServices;
 using MongoDb.UserInterface.Services.Concretions.CustomerServices;
+using MongoDb.UserInterface.Services.Concretions.OrderService;
 using MongoDb.UserInterface.Services.Concretions.ProductServices;
 using MongoDb.UserInterface.Settings.MongoDb.Context;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
@@ -33,6 +35,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 #region Db Settings For Services. This is the Murat teacher's configuration. This is using only for  the product.
