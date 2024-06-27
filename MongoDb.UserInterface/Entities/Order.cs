@@ -40,16 +40,16 @@ namespace MongoDb.UserInterface.Entities
 
     public enum EnumOrderState
     {
-        Waiting = 0,
-        UnPaid = 1,
-        Completed = 2,
+        Waiting = 1,
+        UnPaid = 2,
+        Completed = 3,
     }
 
     public enum EnumPaymentType
     {
-        CreditCard = 0,
-        DebitCard = 1,
-        PayPal = 2,
-        Zell = 3
+        CreditCard = 1,
+        DebitCard = 2,
+        PayPal = 3,
+        Zell = 4
     }
 }

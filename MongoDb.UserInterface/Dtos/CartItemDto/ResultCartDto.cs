@@ -5,7 +5,7 @@ namespace MongoDb.UserInterface.Dtos.CartItemDto
     public class ResultCartDto
     {
         public string Id { get; set; }
-        public List<ResultCartItemDto> ResultCartItemDtos { get; set; }
+        public List<ResultCartItemDto> ResultCartItemDtos { get; set; } = new List<ResultCartItemDto>();
 
         public decimal TotalAmount()
         {
