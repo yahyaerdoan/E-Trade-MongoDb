@@ -6,8 +6,6 @@ using MongoDb.UserInterface.Services.Abstractions.CartService;
 using MongoDb.UserInterface.Services.Abstractions.CustomerServices;
 using MongoDb.UserInterface.Services.Abstractions.OrderService;
 using MongoDb.UserInterface.Services.Abstractions.ProductServices;
-using System.Diagnostics.Metrics;
-using System.Net;
 
 namespace MongoDb.UserInterface.Controllers
 {
