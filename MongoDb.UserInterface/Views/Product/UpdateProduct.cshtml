@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form method="post" asp-action="UpdateProduct">
+            <form method="post" asp-action="UpdateProduct" enctype="">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label fw-bold"></label>
@@ -50,17 +50,23 @@
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageIds" class="control-label fw-bold"></label>
-                    @if (Model.ImageIds.Any())
+                    <label asp-for="ImageUrls" class="control-label fw-bold"></label>
+                    @if (Model.ImageUrls.Any())
                     {
-                        foreach (var image in Model.ImageIds)
+                        foreach (var image in Model.ImageUrls)
                         {
-                            <input type="text" asp-for="ImageIds" value="@image" class="form-control" />
+                            <input type="text" asp-for="ImageUrls" value="@image" class="form-control" />
                             <br />
                         }
                     }
-                    <span asp-validation-for="ImageIds" class="text-danger"></span>
+                    <span asp-validation-for="ImageUrls" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label fw-bold">Upload Photos</label>
+                    <input type="file" name="Photos" class="form-control" multiple />
+                </div>
+
                 <div class="form-group" style="margin-top:1rem">
                     <input type="submit" value="Update" class="btn btn-outline-primary col-12" />
                 </div>

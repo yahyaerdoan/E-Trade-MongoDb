@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDb.UserInterface.Dtos.CategoryDto;
 using MongoDb.UserInterface.Dtos.ProductDto;
+using MongoDb.UserInterface.GoogleCloudStorage.Services;
 using MongoDb.UserInterface.Services.Abstractions.CategoryServices;
 using MongoDb.UserInterface.Services.Abstractions.ProductServices;
 
@@ -10,11 +10,14 @@ namespace MongoDb.UserInterface.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly ICloudStorageService _cloudStorageService;
 
-        public ProductController(IProductService productService, ICategoryService categoryService)
+
+        public ProductController(IProductService productService, ICategoryService categoryService, ICloudStorageService cloudStorageService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _cloudStorageService = cloudStorageService;
         }
 
         public async Task<IActionResult> Index()
@@ -46,16 +49,21 @@ namespace MongoDb.UserInterface.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(string id)
         {
-            var categoryValues =  await _categoryService.GetAllAsync();
+            var categoryValues = await _categoryService.GetAllAsync();
             ViewBag.Categories = categoryValues;
             var values = await _productService.GetByIdProductAsync(id);
             return View(values);
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
         {
-            await _productService.UpdateProductAsync(updateProductDto);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                await _productService.UpdateProductAsync(updateProductDto);
+                return RedirectToAction("Index");
+            }
+            return View(updateProductDto);
         }
     }
 }

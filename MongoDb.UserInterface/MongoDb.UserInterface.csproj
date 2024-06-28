@@ -17,4 +17,8 @@
     <PackageReference Include="QuestPDF" Version="2024.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\GoogleCloudStorageRoute\" />
+  </ItemGroup>
+
 </Project>

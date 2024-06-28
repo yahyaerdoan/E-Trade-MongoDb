@@ -7,7 +7,7 @@ namespace MongoDb.UserInterface.Settings.MongoDb.NewContext
     {
         IMongoCollection<Category> Categories { get; }
         IMongoCollection<Customer> Customers { get; }
-        IMongoCollection<Image> Images { get; }
+        IMongoCollection<ImageDrive> ImageDrives { get; }
         IMongoCollection<Order> Orders { get; }
         IMongoCollection<Product> Products { get; }
         IMongoCollection<Cart> Carts { get; }

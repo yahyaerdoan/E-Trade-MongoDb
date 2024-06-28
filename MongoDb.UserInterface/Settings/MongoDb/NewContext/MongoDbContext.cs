@@ -16,7 +16,7 @@ namespace MongoDb.UserInterface.Settings.MongoDb.Context
 
         public IMongoCollection<Customer> Customers => _database.GetCollection<Customer>("Customers");
 
-        public IMongoCollection<Image> Images => _database.GetCollection<Image>("Images");
+        public IMongoCollection<ImageDrive> ImageDrives => _database.GetCollection<ImageDrive>("ImageDrives");
 
         public IMongoCollection<Order> Orders => _database.GetCollection<Order>("Orders");
 

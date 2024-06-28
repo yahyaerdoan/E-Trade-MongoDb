@@ -6,7 +6,7 @@
                                                 decimal Price, 
                                                 int StockQuantity, 
                                                 //string CategoryId, 
-                                                List<string> ImageIds, 
+                                                List<string> ImageUrls,
                                                 string CategoryName,
                                                 string CategoryDescription
                                               );

@@ -29,7 +29,7 @@ namespace MongoDb.UserInterface.AutoMapper.EntityDtoMappers
                 src.product.Description,
                 src.product.Price,
                 src.product.StockQuantity,
-                src.product.ImageIds,
+                src.product.ImageUrls,
                 src.categoryName,
                 src.descriptipon)).ReverseMap();
 

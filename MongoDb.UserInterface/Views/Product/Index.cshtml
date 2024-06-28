@@ -33,11 +33,12 @@
                 <td>@item.StockQuantity</td>
                 <td>@item.CategoryName</td>
                 <td>@item.CategoryDescription</td>
-                <td>@if (item.ImageIds.Any())
+                <td>
+                    @if (item.ImageUrls.Any())
                     {
-                        foreach (var image in item.ImageIds)
+                        foreach (var image in item.ImageUrls)
                         {
-                            <p>@image</p>
+                            <img src="@image" alt="" style="width: auto; height: 75px; margin-top: 20px;">
                         }
                     }
                  </td>
