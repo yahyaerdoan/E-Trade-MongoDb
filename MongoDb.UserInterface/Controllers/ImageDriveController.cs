@@ -44,14 +44,8 @@ namespace MongoDb.UserInterface.Controllers
                     var product = await _productService.GetByIdProductAsync(imageDrive.ProductId);
                     if (product != null)
                     {
-                        var updateProductDto = new UpdateProductDto
+                        var updateProductDto = new UpdateProductDto(product.Id, product.Name, product.Description, product.Price, product.StockQuantity, product.CategoryId)
                         {
-                            Id = product.Id,
-                            Name = product.Name,
-                            Description = product.Description,
-                            Price = product.Price,
-                            StockQuantity = product.StockQuantity,
-                            CategoryId = product.CategoryId,
                             ImageUrls = product.ImageUrls.Concat(imageDrive.SavedUrls).ToList()
                         };
 

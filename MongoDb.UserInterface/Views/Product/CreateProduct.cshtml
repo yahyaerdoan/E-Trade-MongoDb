@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form method="post" asp-action="CreateProduct">
+            <form method="post" asp-action="CreateProduct" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label fw-bold"></label>
@@ -44,10 +44,14 @@
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+             @*    <div class="form-group">
                     <label asp-for="ImageUrls" class="control-label fw-bold"></label>
                     <input asp-for="ImageUrls" class="form-control" />
                     <span asp-validation-for="ImageUrls" class="text-danger"></span>
+                </div> *@
+                <div class="form-group">
+                    <label class="control-label fw-bold">Upload Photos</label>
+                    <input type="file" name="Photos" class="form-control" multiple />
                 </div>
                 <div class="form-group" style="margin-top:1rem">
                     <input type="submit" value="Create" class="btn btn-outline-primary col-12" />

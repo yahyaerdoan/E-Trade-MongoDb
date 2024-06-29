@@ -10,12 +10,11 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form method="post" asp-action="UpdateProduct" enctype="">
+            <form method="post" asp-action="UpdateProduct" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label fw-bold"></label>
                     <input type="hidden" asp-for="Id" class="form-control" />
-
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
@@ -41,7 +40,6 @@
                     <label class="control-label fw-bold">Category Name</label>
                     <select asp-for="CategoryId" class="form-control">
                         <option value="" selected disabled style="color: red;">Select a Category</option>
-
                         @foreach (var category in ViewBag.Categories)
                         {
                             <option value="@category.Id">@category.Name</option>
@@ -50,27 +48,62 @@
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageUrls" class="control-label fw-bold"></label>
                     @if (Model.ImageUrls.Any())
                     {
-                        foreach (var image in Model.ImageUrls)
+                        <label asp-for="ImageUrls" class="control-label fw-bold"></label>
+                        @foreach (var imageUrl in Model.ImageUrls)
                         {
-                            <input type="text" asp-for="ImageUrls" value="@image" class="form-control" />
-                            <br />
+                            var index = Model.ImageUrls.IndexOf(imageUrl);
+                            <div class="input-group mb-3">
+                                <input type="text" value="@imageUrl" class="form-control" readonly />
+                                <button type="submit" class="btn btn-danger ms-2" name="removeIndex" value="@index">Delete</button>
+                            </div>
                         }
                     }
                     <span asp-validation-for="ImageUrls" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label class="control-label fw-bold">Upload Photos</label>
                     <input type="file" name="Photos" class="form-control" multiple />
                 </div>
-
                 <div class="form-group" style="margin-top:1rem">
                     <input type="submit" value="Update" class="btn btn-outline-primary col-12" />
                 </div>
             </form>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Product Images</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.ImageUrls.Any())
+                    {
+                        <div id="carouselProductImages" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @for (int i = 0; i < Model.ImageUrls.Count; i++)
+                                {
+                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                        <img src="@Model.ImageUrls[i]" class="d-block w-100" style="height: 483px; object-fit: cover;" alt="Product Image @i">
+                                    </div>
+                                }
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductImages" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselProductImages" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No images available for this product.</p>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

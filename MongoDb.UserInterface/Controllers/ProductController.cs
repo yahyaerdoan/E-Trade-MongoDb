@@ -46,18 +46,23 @@ namespace MongoDb.UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
+     
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(string id)
         {
-            var categoryValues = await _categoryService.GetAllAsync();
-            ViewBag.Categories = categoryValues;
+            await PopulateCategoriesAsync();
             var values = await _productService.GetByIdProductAsync(id);
             return View(values);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
+        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto, int? removeIndex)
         {
+            if (removeIndex.HasValue)
+            {                
+              return  await RemoveImageUrlByIndexAsync(updateProductDto.Id, removeIndex.Value);
+            }
+
             if (ModelState.IsValid)
             {
                 await _productService.UpdateProductAsync(updateProductDto);
@@ -65,5 +70,19 @@ namespace MongoDb.UserInterface.Controllers
             }
             return View(updateProductDto);
         }
+
+        private async Task PopulateCategoriesAsync()
+        {
+            var categories = await _categoryService.GetAllAsync();
+            ViewBag.Categories = categories;
+        }
+
+        private async Task<IActionResult> RemoveImageUrlByIndexAsync(string productId, int? removeIndex)
+        {
+            await _productService.RemoveImageUrlByIndexAsync(productId, removeIndex.Value);
+            var updateProduct = await _productService.GetByIdProductAsync(productId);
+            await PopulateCategoriesAsync();
+            return RedirectToAction("UpdateProduct", updateProduct);
+        }    
     }
 }

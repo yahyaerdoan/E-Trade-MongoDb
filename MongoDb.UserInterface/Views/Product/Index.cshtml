@@ -2,52 +2,79 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Layout/Index.cshtml";
-}
 
+    int count = 0;
+    string classActivated = "";
+}
 <div class="container-fluid">
     <div class="alert alert-primary">
         <h6>Product List</h6>
     </div>
     <table class="table table-hover">
-        <tr>
-            <th>Number Of Product</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Category Name</th>
-            <th>Category Description</th>
-            <th>Image Id</th>
-            <th>Delete</th>
-            <th>Update</th>
-        </tr>
-        @foreach (var item in Model)    
-        {
+        <thead>
             <tr>
-                <td><b>@(Model.IndexOf(item) + 1)</b></td>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Description</td>
-                <td><span></span>@item.Price.ToString("C2")</td>
-                <td>@item.StockQuantity</td>
-                <td>@item.CategoryName</td>
-                <td>@item.CategoryDescription</td>
-                <td>
-                    @if (item.ImageUrls.Any())
-                    {
-                        foreach (var image in item.ImageUrls)
-                        {
-                            <img src="@image" alt="" style="width: auto; height: 75px; margin-top: 20px;">
-                        }
-                    }
-                 </td>
-                <td> <a href="/Product/DeleteProduct/@item.Id" class="btn  btn-outline-danger">Delete</a></td>
-                <td> <a href="/Product/UpdateProduct/@item.Id" class="btn  btn-outline-success">Update</a></td>
+                <th>Number Of Product</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category Name</th>
+                <th>Category Description</th>
+                <th>Images</th>
+                <th>Actions</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><b>@(Model.IndexOf(item) + 1)</b></td>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price.ToString("C2")</td>
+                    <td>@item.StockQuantity</td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.CategoryDescription</td>
+                    <td>
+                        <div class="card" style="width: 15rem;">
+                            <div id="carouselExample@item.Id" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @foreach (var image in item.ImageUrls)
+                                    {
+                                        count++;
+                                        if (count == 1)
+                                        {
+                                            classActivated = "carousel-item active";
+                                        }
+                                        else
+                                        {
+                                            classActivated = "carousel-item";
+                                        }
+
+                                        <div class="@classActivated">
+                                            <img src="@image" class="d-block w-100 img-fluid" style="height: 100px; object-fit: cover; border-radius: 5px;" alt="...">
+                                        </div>
+                                    }
+                                    @{
+                                        count = 0;
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <div class="d-flex flex-column align-items-center">
+                            <a href="/Product/DeleteProduct/@item.Id" class="btn btn-outline-danger mb-2 w-100">Delete</a>
+                            <a href="/Product/UpdateProduct/@item.Id" class="btn btn-outline-success w-100">Update</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
-    <a href="/Product/CreateProduct" class="btn  btn-outline-success">Create New Product</a>
+    <a href="/Product/CreateProduct" class="btn btn-outline-success">Create New Product</a>
     <a href="/Product/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
     <a href="/Product/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
 </div>

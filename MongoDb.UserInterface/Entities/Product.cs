@@ -13,6 +13,7 @@ namespace MongoDb.UserInterface.Entities
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public string CategoryId { get; set; }
-        public List<string> ImageUrls { get; set; } = new List<string>();
+        public List<string>? ImageUrls { get; set; } = new List<string>();
+        public List<string>? SavedFileNames { get; set; } = new List<string>();
     }
 }

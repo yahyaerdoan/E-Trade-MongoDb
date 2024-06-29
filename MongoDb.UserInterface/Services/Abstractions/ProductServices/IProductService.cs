@@ -10,5 +10,6 @@ namespace MongoDb.UserInterface.Services.Abstractions.ProductServices
         Task DeleteProductAsync(string id);
         Task<GetByIdProductDto> GetByIdProductAsync(string id);
         Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync();
+        Task RemoveImageUrlByIndexAsync(string productId, int index);
     }
 }
