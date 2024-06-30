@@ -3,7 +3,8 @@
 namespace MongoDb.UserInterface.Services.Abstractions.OrderService
 {
     public interface IOrderService
-    {
-        void Create(Order order);
+    {       
+        Task CreateOrderAsync(Order order);
+        Task<Order> GetOrderByIdAsync(string id);
     }
 }

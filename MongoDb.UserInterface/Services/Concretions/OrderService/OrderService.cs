@@ -1,6 +1,8 @@
 ﻿using MongoDb.UserInterface.Entities;
 using MongoDb.UserInterface.Services.Abstractions.OrderService;
 using MongoDb.UserInterface.Settings.MongoDb.NewContext;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace MongoDb.UserInterface.Services.Concretions.OrderService
 {
@@ -13,9 +15,19 @@ namespace MongoDb.UserInterface.Services.Concretions.OrderService
             _mongoDbContext = mongoDbContext;
         }
 
-        public void Create(Order order)
+        public async Task CreateOrderAsync(Order order)
         {
-            _mongoDbContext.Orders.InsertOne(order);
+            await _mongoDbContext.Orders.InsertOneAsync(order);
+            foreach (var orderItem in order.OrderItems)
+            {
+                orderItem.OrderId = order.Id;
+                await _mongoDbContext.OrderItems.InsertOneAsync(orderItem);
+            }
+        }
+
+        public async Task<Order> GetOrderByIdAsync(string id)
+        {
+            return await _mongoDbContext.Orders.Find(o=> o.Id == id).FirstOrDefaultAsync();
         }
     }
 }

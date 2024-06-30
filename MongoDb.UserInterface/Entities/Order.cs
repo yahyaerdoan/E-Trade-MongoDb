@@ -16,10 +16,7 @@ namespace MongoDb.UserInterface.Entities
         public string CartId { get; set; }
         public string OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
-
         public string CustomerId { get; set; }
-        //public Customer Customer { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
@@ -34,7 +31,7 @@ namespace MongoDb.UserInterface.Entities
         //public string PaymentToken { get; set; }
         //public string ConversationId { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public EnumOrderState OrderState { get; set; }
         public EnumPaymentType PaymentType { get; set; }
     }

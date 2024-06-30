@@ -6,6 +6,7 @@ using MongoDb.UserInterface.Services.Abstractions.CartService;
 using MongoDb.UserInterface.Services.Abstractions.CustomerServices;
 using MongoDb.UserInterface.Services.Abstractions.OrderService;
 using MongoDb.UserInterface.Services.Abstractions.ProductServices;
+using MongoDB.Bson;
 
 namespace MongoDb.UserInterface.Controllers
 {
@@ -85,7 +86,6 @@ namespace MongoDb.UserInterface.Controllers
                     // Set other properties from the form data or user info
                 };
             }
-
             // Initialize ResultCartDto if it's null
             if (model.ResultCartDto == null)
             {
@@ -95,12 +95,12 @@ namespace MongoDb.UserInterface.Controllers
                     //ResultCartItemDtos = new List<ResultCartItemDto>()
                 };
             }
-
             // Ensure ResultCartItemDtos is initialized
             if (model.ResultCartDto.ResultCartItemDtos == null)
             {
                 model.ResultCartDto.ResultCartItemDtos = new List<ResultCartItemDto>();
             }
+
             foreach (var cartItem in cart.CartItems)
             {
                 var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
@@ -122,7 +122,7 @@ namespace MongoDb.UserInterface.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        private void SaveOrder(ResultOrderDto model, string userId)
+        private async void SaveOrder(ResultOrderDto model, string userId)
         {
             var order = new Order()
             {
@@ -140,24 +140,23 @@ namespace MongoDb.UserInterface.Controllers
                 State = model.CreateOrderDto.State,
                 Country = model.CreateOrderDto.Country,
                 OrderNote = model.CreateOrderDto.OrderNote,
-                CustomerId = userId,               
-                OrderItems = new List<OrderItem>()
+                CustomerId = userId              
+               
             };
-
+          
             foreach (var item in model.ResultCartDto.ResultCartItemDtos)
             {
                 var orderItem = new OrderItem
-                {
+                {                    
                     ProductId = item.ProductId,
                     Price = item.Price.ToString(),
                     Quantity = item.Quantity                   
                 };
 
                 order.OrderItems.Add(orderItem);
-            }
+            }            
 
-            _orderService.Create(order);
-
+            await _orderService.CreateOrderAsync(order);           
         }
         private async Task ClearCart(string userId)
         {
