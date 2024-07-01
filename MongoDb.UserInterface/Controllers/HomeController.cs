@@ -48,9 +48,33 @@ namespace MongoDb.UserInterface.Controllers
         public async Task<IActionResult> UpdateQuantity(string productId, int change)
         {
             var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
-            await _cartService.UpdateQuantityAsync(cart.Id, productId, change);   
+            await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrDeleteQuantity(string productId, int change)
+        {
+            var userId = GetStaticCustomerId();
+            var cart = await _cartService.GetCartByCustomerIdAsync(userId);
+            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+
+            if (cartItem != null)
+            {
+                int newQuantity = cartItem.Quantity + change;
+                if (newQuantity <= 0)
+                {
+                    await _cartService.DeleteCartItemAsync(userId, productId);
+                }
+                else
+                {
+                    await _cartService.UpdateQuantityAsync(cart.Id, productId, change);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

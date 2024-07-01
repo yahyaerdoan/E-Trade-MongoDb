@@ -214,6 +214,17 @@ namespace MongoDb.UserInterface.Services.Concretions.ProductServices
             }
         }
 
+        public async Task SubtractFromProductStockAsync(string productId, int quantity)
+        {
+            var productFilter = Builders<Product>.Filter.Eq(x => x.Id, productId);
+            var product = await _productCollection.Find(productFilter).FirstOrDefaultAsync();
+
+            int newStockQuantity = product.StockQuantity - quantity;
+
+            var updateProductStock = Builders<Product>.Update.Set(p => p.StockQuantity, newStockQuantity);
+            await _productCollection.UpdateOneAsync(productFilter, updateProductStock);
+        }
+
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)
         {
             // Upload new photos and add URLs to the ImageUrls list

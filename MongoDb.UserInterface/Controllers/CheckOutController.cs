@@ -115,6 +115,11 @@ namespace MongoDb.UserInterface.Controllers
             SaveOrder(model, userId);
             await ClearCart(userId);
 
+            foreach (var cartItem in cart.CartItems)
+            {
+                await _productService.SubtractFromProductStockAsync(cartItem.ProductId, cartItem.Quantity);
+            }
+
             return RedirectToAction("Index", "Home");
         }
         private async void SaveOrder(ResultOrderDto model, string userId)

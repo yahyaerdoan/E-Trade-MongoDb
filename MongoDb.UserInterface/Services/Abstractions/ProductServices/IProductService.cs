@@ -11,5 +11,6 @@ namespace MongoDb.UserInterface.Services.Abstractions.ProductServices
         Task<GetByIdProductDto> GetByIdProductAsync(string id);
         Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync();
         Task RemoveImageUrlByIndexAsync(string productId, int index);
+        Task SubtractFromProductStockAsync(string productId, int quantity);
     }
 }
