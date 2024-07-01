@@ -6,10 +6,13 @@
     int count = 0;
     string classActivated = "";
 }
-<div class="container-fluid">
+<div class="container-fluid">    
     <div class="alert alert-primary">
         <h6>Product List</h6>
     </div>
+    <a href="/Product/CreateProduct" class="btn btn-outline-success">Create New Product</a>
+    <a href="/Product/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
+    <a href="/Product/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -73,8 +76,5 @@
                 </tr>
             }
         </tbody>
-    </table>
-    <a href="/Product/CreateProduct" class="btn btn-outline-success">Create New Product</a>
-    <a href="/Product/DownloadPdf" class="btn btn-outline-secondary">Download PDF</a>
-    <a href="/Product/DownloadExcel" class="btn btn-outline-warning">Download Excel</a>
+    </table>   
 </div>
