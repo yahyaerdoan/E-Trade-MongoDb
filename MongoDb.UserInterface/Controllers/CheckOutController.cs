@@ -76,26 +76,21 @@ namespace MongoDb.UserInterface.Controllers
             var userId = GetStaticCustomerId();
             var cart = await _cartService.GetCartByCustomerIdAsync(userId);
 
-            // Initialize CreateOrderDto if it's null
             if (model.CreateOrderDto == null)
             {
                 model.CreateOrderDto = new CreateOrderDto
                 {
-                    //OrderDate = DateTime.Now,
                     CustomerId = userId,
-                    // Set other properties from the form data or user info
                 };
             }
-            // Initialize ResultCartDto if it's null
             if (model.ResultCartDto == null)
             {
                 model.ResultCartDto = new ResultCartDto
                 {
                     Id = cart.Id,
-                    //ResultCartItemDtos = new List<ResultCartItemDto>()
+                    ResultCartItemDtos = new List<ResultCartItemDto>()
                 };
             }
-            // Ensure ResultCartItemDtos is initialized
             if (model.ResultCartDto.ResultCartItemDtos == null)
             {
                 model.ResultCartDto.ResultCartItemDtos = new List<ResultCartItemDto>();

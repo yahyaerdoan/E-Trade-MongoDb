@@ -106,49 +106,20 @@ namespace MongoDb.UserInterface.Services.Concretions.CartService
             }
         }
 
-        public async Task<bool> UpdateQuantityAsync(string cartId, string productId, int change)
+        public async Task UpdateQuantityAsync(string cartId, string productId, int change)
         {
-
             var cartFilter = Builders<Cart>.Filter.And(
                 Builders<Cart>.Filter.Eq(x => x.Id, cartId),
                 Builders<Cart>.Filter.ElemMatch(c => c.CartItems, ci => ci.ProductId == productId)
             );
-
-            var productFilter = Builders<Product>.Filter.Eq(x => x.Id, productId);
-
-            // Ensure the cart item exists before trying to update it
-            var cart = await _mongoDbContext.Carts.Find(cartFilter).FirstOrDefaultAsync();
-            if (cart == null)
-            {
-                return false;
-            }
+            var cart = await _mongoDbContext.Carts.Find(cartFilter).FirstOrDefaultAsync();       
 
             var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
-            if (cartItem == null)
-            {
-                return false;
-            }
-
-            // Ensure the stock quantity allows the change
-            var product = await _mongoDbContext.Products.Find(productFilter).FirstOrDefaultAsync();
-            if (product == null)
-            {
-                return false;
-            }
 
             int newCartItemQuantity = cartItem.Quantity + change;
-            if (newCartItemQuantity < 0 || newCartItemQuantity > product.StockQuantity)
-            {
-                return false;
-            }
 
             var updateCart = Builders<Cart>.Update.Inc("CartItems.$.Quantity", +change);
-            var updateProduct = Builders<Product>.Update.Inc(x => x.StockQuantity, -change);
-
-            var cartUpdateResult = await _mongoDbContext.Carts.UpdateOneAsync(cartFilter, updateCart);
-            var productUpdateResult = await _mongoDbContext.Products.UpdateOneAsync(productFilter, updateProduct);
-
-            return product.StockQuantity <= 0;
+             await _mongoDbContext.Carts.UpdateOneAsync(cartFilter, updateCart);            
         }
     }
 }
