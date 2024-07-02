@@ -1,4 +1,4 @@
-# small e-commerce platform
+# Small e-commerce platform
 ## 
 Completed this project by M&Y Yazılım Eğitim Akademi Danışmanlık and by Murat Yücedağ training.
 - Excited to share my expertise in creating robust web applications using the latest technologies. 
