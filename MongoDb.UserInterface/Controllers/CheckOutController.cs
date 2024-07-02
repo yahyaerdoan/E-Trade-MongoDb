@@ -34,7 +34,7 @@ namespace MongoDb.UserInterface.Controllers
             var cart = await _cartService.GetCartByCustomerIdAsync(GetStaticCustomerId());
 
             var resultOrderDtos = new ResultOrderDto()
-            { 
+            {
                 ResultCartDto = new ResultCartDto()
                 {
                     Id = cart.Id,
@@ -76,6 +76,37 @@ namespace MongoDb.UserInterface.Controllers
             var userId = GetStaticCustomerId();
             var cart = await _cartService.GetCartByCustomerIdAsync(userId);
 
+          
+
+            foreach (var cartItem in cart.CartItems)
+            {
+                var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
+                var resultCartItemDto = new ResultCartItemDto
+                {
+                    ProductId = cartItem.ProductId,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Quantity = cartItem.Quantity,
+                    Id = cart.Id
+                };
+
+                model.ResultCartDto.ResultCartItemDtos.Add(resultCartItemDto);
+            }
+
+            await SaveOrder(model, userId);
+            await ClearCart(userId);
+
+            foreach (var cartItem in cart.CartItems)
+            {
+                await _productService.SubtractFromProductStockAsync(cartItem.ProductId, cartItem.Quantity);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private async Task InitializeOrderModel(ResultOrderDto model, string userId, Cart cart)
+        {
             if (model.CreateOrderDto == null)
             {
                 model.CreateOrderDto = new CreateOrderDto
@@ -95,34 +126,9 @@ namespace MongoDb.UserInterface.Controllers
             {
                 model.ResultCartDto.ResultCartItemDtos = new List<ResultCartItemDto>();
             }
-
-            foreach (var cartItem in cart.CartItems)
-            {
-                var product = await _productService.GetByIdProductAsync(cartItem.ProductId);
-                var resultCartItemDto = new ResultCartItemDto
-                {
-                    ProductId = cartItem.ProductId,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Price = product.Price,
-                    Quantity = cartItem.Quantity,
-                    Id = cart.Id
-                };
-
-                model.ResultCartDto.ResultCartItemDtos.Add(resultCartItemDto);
-            }
-
-            SaveOrder(model, userId);
-            await ClearCart(userId);
-
-            foreach (var cartItem in cart.CartItems)
-            {
-                await _productService.SubtractFromProductStockAsync(cartItem.ProductId, cartItem.Quantity);
-            }
-
-            return RedirectToAction("Index", "Home");
         }
-        private async void SaveOrder(ResultOrderDto model, string userId)
+
+        private async Task SaveOrder(ResultOrderDto model, string userId)
         {
             var order = new Order()
             {
@@ -140,23 +146,17 @@ namespace MongoDb.UserInterface.Controllers
                 State = model.CreateOrderDto.State,
                 Country = model.CreateOrderDto.Country,
                 OrderNote = model.CreateOrderDto.OrderNote,
-                CustomerId = userId              
-               
+                CustomerId = userId
             };
-          
-            foreach (var item in model.ResultCartDto.ResultCartItemDtos)
+
+            var orderItems = model.ResultCartDto.ResultCartItemDtos.Select(item => new OrderItem
             {
-                var orderItem = new OrderItem
-                {                    
-                    ProductId = item.ProductId,
-                    Price = item.Price.ToString(),
-                    Quantity = item.Quantity                   
-                };
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                Price = item.Price.ToString()
+            });
 
-                order.OrderItems.Add(orderItem);
-            }            
-
-            await _orderService.CreateOrderAsync(order);           
+            await _orderService.CreateOrderAsync(order, orderItems.ToList());
         }
         private async Task ClearCart(string userId)
         {

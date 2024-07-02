@@ -15,10 +15,11 @@ namespace MongoDb.UserInterface.Services.Concretions.OrderService
             _mongoDbContext = mongoDbContext;
         }
 
-        public async Task CreateOrderAsync(Order order)
+        public async Task CreateOrderAsync(Order order, List<OrderItem> orderItems)
         {
             await _mongoDbContext.Orders.InsertOneAsync(order);
-            foreach (var orderItem in order.OrderItems)
+
+            foreach (var orderItem in orderItems)
             {
                 orderItem.OrderId = order.Id;
                 await _mongoDbContext.OrderItems.InsertOneAsync(orderItem);

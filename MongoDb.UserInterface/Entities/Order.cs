@@ -5,10 +5,6 @@ namespace MongoDb.UserInterface.Entities
 {
     public class Order
     {
-        public Order()
-        {
-            OrderItems = new List<OrderItem>();
-        }
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -31,18 +27,15 @@ namespace MongoDb.UserInterface.Entities
         //public string PaymentToken { get; set; }
         //public string ConversationId { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public EnumOrderState OrderState { get; set; }
         public EnumPaymentType PaymentType { get; set; }
     }
-
     public enum EnumOrderState
     {
         Waiting = 1,
         UnPaid = 2,
         Completed = 3,
     }
-
     public enum EnumPaymentType
     {
         CreditCard = 1,

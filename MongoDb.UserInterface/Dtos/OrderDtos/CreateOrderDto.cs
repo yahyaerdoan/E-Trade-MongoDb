@@ -22,5 +22,7 @@ namespace MongoDb.UserInterface.Dtos.OrderDtos
         public string State { get; set; }
         public string Country { get; set; }
         public string OrderNote { get; set; }
+        public EnumOrderState OrderState { get; set; }
+        public EnumPaymentType PaymentType { get; set; }
     }
 }
