@@ -76,7 +76,7 @@ namespace MongoDb.UserInterface.Controllers
             var userId = GetStaticCustomerId();
             var cart = await _cartService.GetCartByCustomerIdAsync(userId);
 
-          
+            await InitializeOrderModel(model, userId, cart);
 
             foreach (var cartItem in cart.CartItems)
             {
